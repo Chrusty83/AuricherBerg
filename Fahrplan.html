@@ -1,1135 +1,364 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Fahrgemeinschaft Jugendcamp</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-      background: #f3f5f7;
-      color: #222;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    h1 {
-      margin-top: 0;
-      text-align: center;
-      color: #185a37;
-    }
-
-    .hinweis {
-      margin-bottom: 20px;
-      text-align: center;
-      color: #555;
-    }
-
-    .status {
-      display: none;
-      margin-bottom: 20px;
-      padding: 12px 15px;
-      border-radius: 8px;
-      font-weight: bold;
-      white-space: pre-wrap;
-    }
-
-    .status.info {
-      display: block;
-      color: #174b70;
-      background: #dceeff;
-      border: 1px solid #94c9ef;
-    }
-
-    .status.erfolg {
-      display: block;
-      color: #155724;
-      background: #d4edda;
-      border: 1px solid #9ed4aa;
-    }
-
-    .status.fehler {
-      display: block;
-      color: #721c24;
-      background: #f8d7da;
-      border: 1px solid #eba2a8;
-    }
-
-    .karte {
-      margin-bottom: 25px;
-      padding: 20px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-    }
-
-    .formular-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 15px;
-    }
-
-    .formular-gruppe {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .formular-gruppe.ganz {
-      grid-column: 1 / -1;
-    }
-
-    label {
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 11px;
-      font: inherit;
-      background: white;
-      border: 1px solid #bbb;
-      border-radius: 7px;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      outline: 2px solid #7bc69d;
-      border-color: #287348;
-    }
-
-    textarea {
-      min-height: 80px;
-      resize: vertical;
-    }
-
-    .button-zeile {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    button {
-      padding: 11px 18px;
-      font: inherit;
-      font-weight: bold;
-      cursor: pointer;
-      border: 0;
-      border-radius: 7px;
-    }
-
-    button:disabled {
-      cursor: not-allowed;
-      opacity: 0.55;
-    }
-
-    .button-speichern {
-      color: white;
-      background: #287348;
-    }
-
-    .button-speichern:hover {
-      background: #1e5e39;
-    }
-
-    .button-abbrechen {
-      color: #222;
-      background: #e2e5e8;
-    }
-
-    .button-loeschen {
-      padding: 7px 10px;
-      color: white;
-      background: #b4232d;
-    }
-
-    .button-bearbeiten {
-      padding: 7px 10px;
-      color: white;
-      background: #276a9c;
-    }
-
-    .ladeanzeige {
-      padding: 25px;
-      text-align: center;
-      color: #666;
-    }
-
-    .tag {
-      margin-bottom: 28px;
-    }
-
-    .tag h2 {
-      margin: 0 0 12px;
-      padding: 10px 14px;
-      color: white;
-      background: #287348;
-      border-radius: 8px;
-    }
-
-    .richtungs-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .richtung {
-      min-width: 0;
-      padding: 14px;
-      background: #f8f9fa;
-      border: 1px solid #d8dcdf;
-      border-radius: 9px;
-    }
-
-    .richtung h3 {
-      margin: 0 0 12px;
-    }
-
-    .fahrt {
-      margin-bottom: 12px;
-      padding: 13px;
-      background: white;
-      border-left: 5px solid #287348;
-      border-radius: 7px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-    }
-
-    .fahrt:last-child {
-      margin-bottom: 0;
-    }
-
-    .fahrt-name {
-      margin-bottom: 7px;
-      font-size: 1.06rem;
-      font-weight: bold;
-    }
-
-    .fahrt-zeile {
-      margin: 4px 0;
-      overflow-wrap: anywhere;
-    }
-
-    .fahrt-aktionen {
-      display: flex;
-      gap: 8px;
-      margin-top: 11px;
-    }
-
-    .leer {
-      padding: 12px;
-      color: #777;
-      text-align: center;
-      font-style: italic;
-      background: white;
-      border: 1px dashed #bbb;
-      border-radius: 7px;
-    }
-
-    @media (max-width: 750px) {
-      body {
-        padding: 10px;
-      }
-
-      .formular-grid,
-      .richtungs-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .karte {
-        padding: 15px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fahrdienst · Feriencamp Auricher Berg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --moos:#22392c;
+    --kiefer:#3f6b52;
+    --kiefer-hell:#5c8a6b;
+    --birke:#f4efe4;
+    --lagerfeuer:#e2872f;
+    --lagerfeuer-hell:#f1a862;
+    --linie:#c9c0aa;
+    --schatten: 0 2px 10px rgba(34,57,44,0.15);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--birke);
+    color:var(--moos);
+    font-family:'Work Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  header{
+    background:var(--moos);
+    color:var(--birke);
+    padding:48px 24px 64px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  header::after{
+    content:"";
+    position:absolute;
+    bottom:0; left:0; right:0;
+    height:28px;
+    background:var(--birke);
+    clip-path: polygon(0 100%, 3% 0, 6% 100%, 9% 0, 12% 100%, 15% 0, 18% 100%, 21% 0, 24% 100%, 27% 0, 30% 100%, 33% 0, 36% 100%, 39% 0, 42% 100%, 45% 0, 48% 100%, 51% 0, 54% 100%, 57% 0, 60% 100%, 63% 0, 66% 100%, 69% 0, 72% 100%, 75% 0, 78% 100%, 81% 0, 84% 100%, 87% 0, 90% 100%, 93% 0, 96% 100%, 99% 0, 100% 100%);
+  }
+  header h1{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:clamp(1.8rem, 4vw, 2.6rem);
+    margin:0 0 8px;
+    letter-spacing:-0.01em;
+  }
+  header p{
+    margin:0;
+    font-size:1.05rem;
+    color:var(--lagerfeuer-hell);
+    font-weight:500;
+  }
+  main{
+    max-width:920px;
+    margin:0 auto;
+    padding:32px 20px 80px;
+  }
+  .name-bar{
+    background:#fff;
+    border:1px solid var(--linie);
+    border-radius:14px;
+    padding:18px 20px;
+    margin:-40px auto 36px;
+    max-width:560px;
+    box-shadow:var(--schatten);
+    display:flex;
+    gap:10px;
+    align-items:center;
+  }
+  .name-bar label{
+    font-weight:600;
+    font-size:0.95rem;
+    white-space:nowrap;
+  }
+  .name-bar input{
+    flex:1;
+    border:1.5px solid var(--linie);
+    border-radius:8px;
+    padding:10px 12px;
+    font-size:1rem;
+    font-family:inherit;
+    color:var(--moos);
+  }
+  .name-bar input:focus{
+    outline:2px solid var(--kiefer);
+    outline-offset:1px;
+  }
+  .status{
+    text-align:center;
+    font-size:0.9rem;
+    color:var(--kiefer);
+    margin-bottom:24px;
+    min-height:1.2em;
+  }
+  .days{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+  .day-card{
+    background:#fff;
+    border-radius:16px;
+    box-shadow:var(--schatten);
+    overflow:hidden;
+    border:1px solid var(--linie);
+  }
+  .day-head{
+    background:var(--kiefer);
+    color:var(--birke);
+    padding:14px 20px;
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+  }
+  .day-head .eyebrow{
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    opacity:0.75;
+    font-weight:600;
+  }
+  .day-head h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.3rem;
+    margin:0;
+  }
+  .slots{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+  .slot{
+    padding:16px 18px 18px;
+  }
+  .slot + .slot{
+    border-left:1px dashed var(--linie);
+  }
+  .slot-title{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-weight:600;
+    font-size:0.92rem;
+    margin-bottom:10px;
+    color:var(--moos);
+  }
+  .slot-title .icon{
+    font-size:1.1rem;
+  }
+  .entries{
+    list-style:none;
+    margin:0 0 12px;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    min-height:8px;
+  }
+  .entries li{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:var(--birke);
+    border-radius:8px;
+    padding:6px 10px;
+    font-size:0.92rem;
+  }
+  .entries li button{
+    background:none;
+    border:none;
+    color:#a35a2d;
+    cursor:pointer;
+    font-size:0.85rem;
+    padding:0 2px;
+    font-weight:600;
+  }
+  .entries li button:hover{
+    text-decoration:underline;
+  }
+  .empty{
+    color:#8a8272;
+    font-size:0.85rem;
+    font-style:italic;
+    margin:0 0 12px;
+  }
+  .add-btn{
+    width:100%;
+    background:var(--lagerfeuer);
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:9px 10px;
+    font-weight:600;
+    font-size:0.88rem;
+    cursor:pointer;
+    font-family:inherit;
+    transition:background 0.15s;
+  }
+  .add-btn:hover{
+    background:#c96f1f;
+  }
+  .add-btn:focus-visible{
+    outline:2px solid var(--moos);
+    outline-offset:2px;
+  }
+  @media (max-width:520px){
+    .slots{grid-template-columns:1fr;}
+    .slot + .slot{border-left:none; border-top:1px dashed var(--linie);}
+    .name-bar{flex-direction:column; align-items:stretch;}
+  }
+</style>
 </head>
-
 <body>
-  <main class="container">
-    <h1>Fahrgemeinschaft Jugendcamp</h1>
 
-    <p class="hinweis">
-      Hier können Hin- und Rückfahrten von Montag bis Sonntag eingetragen werden.
-    </p>
+<header>
+  <h1>Fahrdienst Feriencamp Auricher Berg</h1>
+  <p>Eine Woche · Montag bis Sonntag · Bringen &amp; Abholen</p>
+</header>
 
-    <div id="status" class="status"></div>
+<main>
+  <div class="name-bar">
+    <label for="nameInput">Dein Name</label>
+    <input type="text" id="nameInput" placeholder="z. B. Anna Meyer" autocomplete="name">
+  </div>
+  <div class="status" id="status">Lade Fahrplan …</div>
 
-    <section class="karte">
-      <h2 id="formularTitel">Fahrt eintragen</h2>
+  <div class="days" id="days"></div>
+</main>
 
-      <form id="fahrtFormular">
-        <div class="formular-grid">
-          <div class="formular-gruppe">
-            <label for="name">Name der Fahrerin / des Fahrers</label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              maxlength="80"
-              required
-              placeholder="Zum Beispiel Christian Walter"
-            >
-          </div>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+  import {
+    getFirestore, collection, addDoc, deleteDoc, doc,
+    onSnapshot, query, orderBy, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
-          <div class="formular-gruppe">
-            <label for="telefon">Telefonnummer</label>
-            <input
-              id="telefon"
-              name="telefon"
-              type="tel"
-              maxlength="40"
-              placeholder="Zum Beispiel 0171 1234567"
-            >
-          </div>
+  const firebaseConfig = {
+    apiKey: "AIzaSyBMSJyaSeG-U2dRqGdh89pTbeyK2UYWBeg",
+    authDomain: "auricherberg.firebaseapp.com",
+    projectId: "auricherberg",
+    storageBucket: "auricherberg.firebasestorage.app",
+    messagingSenderId: "644337434354",
+    appId: "1:644337434354:web:5699080584b33487061a6b",
+    measurementId: "G-SVJLLXX6K7"
+  };
 
-          <div class="formular-gruppe">
-            <label for="tag">Tag</label>
-            <select id="tag" name="tag" required>
-              <option value="montag">Montag</option>
-              <option value="dienstag">Dienstag</option>
-              <option value="mittwoch">Mittwoch</option>
-              <option value="donnerstag">Donnerstag</option>
-              <option value="freitag">Freitag</option>
-              <option value="samstag">Samstag</option>
-              <option value="sonntag">Sonntag</option>
-            </select>
-          </div>
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const col = collection(db, "fahrdienst_eintraege");
 
-          <div class="formular-gruppe">
-            <label for="richtung">Fahrtrichtung</label>
-            <select id="richtung" name="richtung" required>
-              <option value="hinfahrt">Hinfahrt</option>
-              <option value="rueckfahrt">Rückfahrt</option>
-            </select>
-          </div>
+  const DAYS = ["Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag","Sonntag"];
+  const SLOTS = [
+    { key: "bringen", label: "Bringen", icon: "🌅" },
+    { key: "abholen", label: "Abholen", icon: "🌇" }
+  ];
 
-          <div class="formular-gruppe">
-            <label for="uhrzeit">Uhrzeit</label>
-            <input
-              id="uhrzeit"
-              name="uhrzeit"
-              type="time"
-              required
-            >
-          </div>
+  const daysEl = document.getElementById("days");
+  const statusEl = document.getElementById("status");
+  const nameInput = document.getElementById("nameInput");
 
-          <div class="formular-gruppe">
-            <label for="plaetze">Freie Plätze</label>
-            <input
-              id="plaetze"
-              name="plaetze"
-              type="number"
-              min="0"
-              max="20"
-              value="1"
-              required
-            >
-          </div>
-
-          <div class="formular-gruppe ganz">
-            <label for="kinder">Mitfahrende Kinder</label>
-            <input
-              id="kinder"
-              name="kinder"
-              type="text"
-              maxlength="200"
-              placeholder="Zum Beispiel Anton und Oskar"
-            >
-          </div>
-
-          <div class="formular-gruppe ganz">
-            <label for="bemerkung">Bemerkung</label>
-            <textarea
-              id="bemerkung"
-              name="bemerkung"
-              maxlength="500"
-              placeholder="Zum Beispiel Treffpunkt, Rückfragen oder Besonderheiten"
-            ></textarea>
-          </div>
-        </div>
-
-        <div class="button-zeile">
-          <button
-            id="speichernButton"
-            class="button-speichern"
-            type="submit"
-            disabled
-          >
-            Fahrt speichern
-          </button>
-
-          <button
-            id="abbrechenButton"
-            class="button-abbrechen"
-            type="button"
-            hidden
-          >
-            Bearbeitung abbrechen
-          </button>
-        </div>
-      </form>
-    </section>
-
-    <section class="karte">
-      <h2>Alle Fahrten</h2>
-
-      <div id="fahrtenListe" class="ladeanzeige">
-        Verbindung zu Firebase wird hergestellt …
+  // Grundgerüst der Karten aufbauen
+  DAYS.forEach(day => {
+    const card = document.createElement("div");
+    card.className = "day-card";
+    card.innerHTML = `
+      <div class="day-head">
+        <span class="eyebrow">Tag</span>
+        <h2>${day}</h2>
       </div>
-    </section>
-  </main>
-
-  <script type="module">
-    /*
-     * Firebase-Module
-     *
-     * Alle Firebase-Imports müssen dieselbe Versionsnummer verwenden.
-     */
-    import {
-      initializeApp
-    } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-
-    import {
-      getAuth,
-      signInAnonymously,
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-
-    import {
-      getFirestore,
-      collection,
-      doc,
-      setDoc,
-      deleteDoc,
-      onSnapshot,
-      serverTimestamp,
-      query,
-      orderBy
-    } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
-
-    /*
-     * ---------------------------------------------------------
-     * HIER DEINE FIREBASE-KONFIGURATION EINTRAGEN
-     * ---------------------------------------------------------
-     */
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBMSJyaSeG-U2dRqGdh89pTbeyK2UYWBeg",
-  authDomain: "auricherberg.firebaseapp.com",
-  projectId: "auricherberg",
-  storageBucket: "auricherberg.firebasestorage.app",
-  messagingSenderId: "644337434354",
-  appId: "1:644337434354:web:5699080584b33487061a6b",
-  measurementId: "G-SVJLLXX6K7"
-};
-
-
-    /*
-     * Name der Firestore-Collection
-     */
-    const COLLECTION_NAME = "fahrgemeinschaften";
-
-
-    /*
-     * Firebase starten
-     */
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-
-    /*
-     * HTML-Elemente
-     */
-    const statusElement = document.getElementById("status");
-    const formular = document.getElementById("fahrtFormular");
-    const formularTitel = document.getElementById("formularTitel");
-    const speichernButton = document.getElementById("speichernButton");
-    const abbrechenButton = document.getElementById("abbrechenButton");
-    const fahrtenListe = document.getElementById("fahrtenListe");
-
-    const nameFeld = document.getElementById("name");
-    const telefonFeld = document.getElementById("telefon");
-    const tagFeld = document.getElementById("tag");
-    const richtungFeld = document.getElementById("richtung");
-    const uhrzeitFeld = document.getElementById("uhrzeit");
-    const plaetzeFeld = document.getElementById("plaetze");
-    const kinderFeld = document.getElementById("kinder");
-    const bemerkungFeld = document.getElementById("bemerkung");
-
-
-    /*
-     * Enthält die ursprüngliche Dokument-ID,
-     * wenn ein Eintrag bearbeitet wird.
-     */
-    let bearbeiteteDokumentId = null;
-
-    /*
-     * Wird true, sobald Firebase Authentication fertig ist.
-     */
-    let firebaseBereit = false;
-
-
-    /*
-     * Reihenfolge der Tage
-     */
-    const tage = [
-      {
-        id: "montag",
-        text: "Montag"
-      },
-      {
-        id: "dienstag",
-        text: "Dienstag"
-      },
-      {
-        id: "mittwoch",
-        text: "Mittwoch"
-      },
-      {
-        id: "donnerstag",
-        text: "Donnerstag"
-      },
-      {
-        id: "freitag",
-        text: "Freitag"
-      },
-      {
-        id: "samstag",
-        text: "Samstag"
-      },
-      {
-        id: "sonntag",
-        text: "Sonntag"
-      }
-    ];
-
-
-    /*
-     * Statusmeldung anzeigen
-     */
-    function zeigeStatus(text, typ = "info") {
-      statusElement.textContent = text;
-      statusElement.className = `status ${typ}`;
-    }
-
-
-    /*
-     * Statusmeldung ausblenden
-     */
-    function versteckeStatus() {
-      statusElement.textContent = "";
-      statusElement.className = "status";
-    }
-
-
-    /*
-     * Text sicher als HTML ausgeben.
-     * Verhindert, dass eingegebener HTML-Code ausgeführt wird.
-     */
-    function escapeHtml(wert) {
-      return String(wert ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-
-    /*
-     * Text in eine gültige Dokument-ID umwandeln.
-     */
-    function normalisiereDokumentId(text) {
-      return String(text)
-        .trim()
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/ß/g, "ss")
-        .replace(/[^a-z0-9_-]+/g, "_")
-        .replace(/^_+|_+$/g, "")
-        .substring(0, 120);
-    }
-
-
-    /*
-     * Feste Dokument-ID erzeugen.
-     *
-     * Beispiel:
-     * christian_walter_montag_hinfahrt
-     *
-     * Derselbe Name, Tag und dieselbe Richtung ergeben immer
-     * dieselbe ID. Dadurch aktualisiert setDoc() das vorhandene
-     * Dokument, statt immer ein neues anzulegen.
-     */
-    function erzeugeDokumentId(name, tag, richtung) {
-      return normalisiereDokumentId(
-        `${name}_${tag}_${richtung}`
-      );
-    }
-
-
-    /*
-     * Formular zurücksetzen
-     */
-    function formularZuruecksetzen() {
-      formular.reset();
-
-      plaetzeFeld.value = "1";
-      tagFeld.value = "montag";
-      richtungFeld.value = "hinfahrt";
-
-      bearbeiteteDokumentId = null;
-
-      formularTitel.textContent = "Fahrt eintragen";
-      speichernButton.textContent = "Fahrt speichern";
-      abbrechenButton.hidden = true;
-    }
-
-
-    /*
-     * Einzelne Fahrt als HTML erzeugen
-     */
-    function erzeugeFahrtHtml(fahrt) {
-      const telefon = fahrt.telefon
-        ? `
-          <div class="fahrt-zeile">
-            <strong>Telefon:</strong>
-            <a href="tel:${escapeHtml(fahrt.telefon)}">
-              ${escapeHtml(fahrt.telefon)}
-            </a>
+      <div class="slots">
+        ${SLOTS.map(s => `
+          <div class="slot" data-day="${day}" data-slot="${s.key}">
+            <div class="slot-title"><span class="icon">${s.icon}</span> ${s.label}</div>
+            <ul class="entries"></ul>
+            <p class="empty" hidden>Noch niemand eingetragen</p>
+            <button class="add-btn" type="button">+ Eintragen</button>
           </div>
-        `
-        : "";
+        `).join("")}
+      </div>
+    `;
+    daysEl.appendChild(card);
+  });
 
-      const kinder = fahrt.kinder
-        ? `
-          <div class="fahrt-zeile">
-            <strong>Kinder:</strong>
-            ${escapeHtml(fahrt.kinder)}
-          </div>
-        `
-        : "";
-
-      const bemerkung = fahrt.bemerkung
-        ? `
-          <div class="fahrt-zeile">
-            <strong>Bemerkung:</strong>
-            ${escapeHtml(fahrt.bemerkung)}
-          </div>
-        `
-        : "";
-
-      return `
-        <article class="fahrt">
-          <div class="fahrt-name">
-            ${escapeHtml(fahrt.name)}
-          </div>
-
-          <div class="fahrt-zeile">
-            <strong>Uhrzeit:</strong>
-            ${escapeHtml(fahrt.uhrzeit)} Uhr
-          </div>
-
-          <div class="fahrt-zeile">
-            <strong>Freie Plätze:</strong>
-            ${escapeHtml(fahrt.plaetze)}
-          </div>
-
-          ${telefon}
-          ${kinder}
-          ${bemerkung}
-
-          <div class="fahrt-aktionen">
-            <button
-              type="button"
-              class="button-bearbeiten"
-              data-aktion="bearbeiten"
-              data-id="${escapeHtml(fahrt.id)}"
-            >
-              Bearbeiten
-            </button>
-
-            <button
-              type="button"
-              class="button-loeschen"
-              data-aktion="loeschen"
-              data-id="${escapeHtml(fahrt.id)}"
-            >
-              Löschen
-            </button>
-          </div>
-        </article>
-      `;
+  // Klick-Handler für Eintragen-Buttons
+  daysEl.addEventListener("click", async (e) => {
+    if (!e.target.classList.contains("add-btn")) return;
+    const name = nameInput.value.trim();
+    if (!name) {
+      statusEl.textContent = "Bitte zuerst deinen Namen eingeben.";
+      nameInput.focus();
+      return;
     }
-
-
-    /*
-     * Alle Fahrten darstellen
-     */
-    function zeigeFahrten(fahrten) {
-      const fahrtenNachId = new Map();
-
-      for (const fahrt of fahrten) {
-        fahrtenNachId.set(fahrt.id, fahrt);
-      }
-
-      let html = "";
-
-      for (const tag of tage) {
-        const hinfahrten = fahrten
-          .filter((fahrt) => {
-            return (
-              fahrt.tag === tag.id &&
-              fahrt.richtung === "hinfahrt"
-            );
-          })
-          .sort(sortiereFahrten);
-
-        const rueckfahrten = fahrten
-          .filter((fahrt) => {
-            return (
-              fahrt.tag === tag.id &&
-              fahrt.richtung === "rueckfahrt"
-            );
-          })
-          .sort(sortiereFahrten);
-
-        html += `
-          <section class="tag">
-            <h2>${tag.text}</h2>
-
-            <div class="richtungs-grid">
-              <div class="richtung">
-                <h3>Hinfahrt</h3>
-
-                ${
-                  hinfahrten.length > 0
-                    ? hinfahrten.map(erzeugeFahrtHtml).join("")
-                    : `<div class="leer">Noch keine Hinfahrt eingetragen</div>`
-                }
-              </div>
-
-              <div class="richtung">
-                <h3>Rückfahrt</h3>
-
-                ${
-                  rueckfahrten.length > 0
-                    ? rueckfahrten.map(erzeugeFahrtHtml).join("")
-                    : `<div class="leer">Noch keine Rückfahrt eingetragen</div>`
-                }
-              </div>
-            </div>
-          </section>
-        `;
-      }
-
-      fahrtenListe.className = "";
-      fahrtenListe.innerHTML = html;
-
-      /*
-       * Map an das Element hängen, damit die Bearbeiten-Funktion
-       * den vollständigen Eintrag findet.
-       */
-      fahrtenListe.fahrtenNachId = fahrtenNachId;
+    const slotEl = e.target.closest(".slot");
+    const day = slotEl.dataset.day;
+    const slot = slotEl.dataset.slot;
+    e.target.disabled = true;
+    try {
+      await addDoc(col, { day, slot, name, timestamp: serverTimestamp() });
+      statusEl.textContent = "";
+    } catch (err) {
+      statusEl.textContent = "Fehler beim Speichern: " + err.message;
+    } finally {
+      e.target.disabled = false;
     }
+  });
 
-
-    /*
-     * Nach Uhrzeit und anschließend nach Name sortieren.
-     */
-    function sortiereFahrten(a, b) {
-      const zeitVergleich = String(a.uhrzeit ?? "")
-        .localeCompare(String(b.uhrzeit ?? ""));
-
-      if (zeitVergleich !== 0) {
-        return zeitVergleich;
-      }
-
-      return String(a.name ?? "")
-        .localeCompare(String(b.name ?? ""), "de");
+  // Löschen eines eigenen Eintrags
+  daysEl.addEventListener("click", async (e) => {
+    if (!e.target.classList.contains("remove-btn")) return;
+    const id = e.target.dataset.id;
+    try {
+      await deleteDoc(doc(db, "fahrdienst_eintraege", id));
+    } catch (err) {
+      statusEl.textContent = "Fehler beim Entfernen: " + err.message;
     }
+  });
 
-
-    /*
-     * Fahrten in Echtzeit laden.
-     *
-     * Bei Änderungen in Firestore wird die Anzeige automatisch
-     * aktualisiert.
-     */
-    function starteLiveAbfrage() {
-      const fahrtenAbfrage = query(
-        collection(db, COLLECTION_NAME),
-        orderBy("name")
-      );
-
-      onSnapshot(
-        fahrtenAbfrage,
-
-        (snapshot) => {
-          const fahrten = snapshot.docs.map((dokument) => {
-            return {
-              id: dokument.id,
-              ...dokument.data()
-            };
-          });
-
-          zeigeFahrten(fahrten);
-        },
-
-        (fehler) => {
-          console.error("Fehler beim Laden:", fehler);
-
-          fahrtenListe.className = "ladeanzeige";
-          fahrtenListe.textContent =
-            "Daten konnten nicht geladen werden.";
-
-          zeigeStatus(
-            `Daten konnten nicht geladen werden.\n` +
-            `Fehlercode: ${fehler.code || "unbekannt"}\n` +
-            `Meldung: ${fehler.message || fehler}`,
-            "fehler"
-          );
-        }
-      );
-    }
-
-
-    /*
-     * Fahrt speichern
-     */
-    formular.addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      if (!firebaseBereit || !auth.currentUser) {
-        zeigeStatus(
-          "Firebase ist noch nicht bereit. Bitte die Seite neu laden.",
-          "fehler"
-        );
-        return;
-      }
-
-      const name = nameFeld.value.trim();
-      const telefon = telefonFeld.value.trim();
-      const tag = tagFeld.value;
-      const richtung = richtungFeld.value;
-      const uhrzeit = uhrzeitFeld.value;
-      const plaetze = Number(plaetzeFeld.value);
-      const kinder = kinderFeld.value.trim();
-      const bemerkung = bemerkungFeld.value.trim();
-
-      if (!name) {
-        zeigeStatus(
-          "Bitte einen Namen eingeben.",
-          "fehler"
-        );
-        nameFeld.focus();
-        return;
-      }
-
-      if (!uhrzeit) {
-        zeigeStatus(
-          "Bitte eine Uhrzeit auswählen.",
-          "fehler"
-        );
-        uhrzeitFeld.focus();
-        return;
-      }
-
-      if (
-        !Number.isInteger(plaetze) ||
-        plaetze < 0 ||
-        plaetze > 20
-      ) {
-        zeigeStatus(
-          "Bitte eine gültige Anzahl freier Plätze eingeben.",
-          "fehler"
-        );
-        plaetzeFeld.focus();
-        return;
-      }
-
-      /*
-       * Neue feste ID aus Name, Tag und Richtung erzeugen.
-       */
-      const neueDokumentId = erzeugeDokumentId(
-        name,
-        tag,
-        richtung
-      );
-
-      if (!neueDokumentId) {
-        zeigeStatus(
-          "Aus den eingegebenen Daten konnte keine Dokument-ID erzeugt werden.",
-          "fehler"
-        );
-        return;
-      }
-
-      speichernButton.disabled = true;
-      speichernButton.textContent = "Wird gespeichert …";
-
-      try {
-        /*
-         * Wird beim Bearbeiten der Name, Tag oder die Richtung
-         * verändert, ändert sich auch die Dokument-ID.
-         *
-         * In diesem Fall wird das alte Dokument gelöscht.
-         */
-        if (
-          bearbeiteteDokumentId &&
-          bearbeiteteDokumentId !== neueDokumentId
-        ) {
-          await deleteDoc(
-            doc(
-              db,
-              COLLECTION_NAME,
-              bearbeiteteDokumentId
-            )
-          );
-        }
-
-        /*
-         * setDoc() mit fester Dokument-ID:
-         *
-         * Ist die ID vorhanden, wird das Dokument aktualisiert.
-         * Ist die ID nicht vorhanden, wird es neu angelegt.
-         */
-        await setDoc(
-          doc(
-            db,
-            COLLECTION_NAME,
-            neueDokumentId
-          ),
-          {
-            name,
-            telefon,
-            tag,
-            richtung,
-            uhrzeit,
-            plaetze,
-            kinder,
-            bemerkung,
-
-            /*
-             * Benutzer-ID des anonym angemeldeten Benutzers
-             */
-            benutzerId: auth.currentUser.uid,
-
-            aktualisiertAm: serverTimestamp()
-          },
-          {
-            merge: true
-          }
-        );
-
-        formularZuruecksetzen();
-
-        zeigeStatus(
-          "Die Fahrt wurde erfolgreich gespeichert.",
-          "erfolg"
-        );
-
-        window.setTimeout(() => {
-          versteckeStatus();
-        }, 3500);
-      } catch (fehler) {
-        console.error("Fehler beim Speichern:", fehler);
-
-        zeigeStatus(
-          `Die Fahrt konnte nicht gespeichert werden.\n` +
-          `Fehlercode: ${fehler.code || "unbekannt"}\n` +
-          `Meldung: ${fehler.message || fehler}`,
-          "fehler"
-        );
-      } finally {
-        speichernButton.disabled = false;
-        speichernButton.textContent = bearbeiteteDokumentId
-          ? "Änderungen speichern"
-          : "Fahrt speichern";
-      }
+  // Live-Daten
+  const q = query(col, orderBy("timestamp", "asc"));
+  onSnapshot(q, (snapshot) => {
+    // Alle Listen leeren
+    document.querySelectorAll(".slot").forEach(slotEl => {
+      slotEl.querySelector(".entries").innerHTML = "";
     });
 
-
-    /*
-     * Bearbeiten und Löschen über Event-Delegation.
-     */
-    fahrtenListe.addEventListener("click", async (event) => {
-      const button = event.target.closest("button[data-aktion]");
-
-      if (!button) {
-        return;
-      }
-
-      const aktion = button.dataset.aktion;
-      const dokumentId = button.dataset.id;
-
-      if (!dokumentId) {
-        return;
-      }
-
-      const fahrt = fahrtenListe.fahrtenNachId?.get(dokumentId);
-
-      if (aktion === "bearbeiten") {
-        if (!fahrt) {
-          zeigeStatus(
-            "Der Eintrag wurde nicht gefunden.",
-            "fehler"
-          );
-          return;
-        }
-
-        bearbeiteteDokumentId = dokumentId;
-
-        nameFeld.value = fahrt.name ?? "";
-        telefonFeld.value = fahrt.telefon ?? "";
-        tagFeld.value = fahrt.tag ?? "montag";
-        richtungFeld.value = fahrt.richtung ?? "hinfahrt";
-        uhrzeitFeld.value = fahrt.uhrzeit ?? "";
-        plaetzeFeld.value = fahrt.plaetze ?? 1;
-        kinderFeld.value = fahrt.kinder ?? "";
-        bemerkungFeld.value = fahrt.bemerkung ?? "";
-
-        formularTitel.textContent = "Fahrt bearbeiten";
-        speichernButton.textContent = "Änderungen speichern";
-        abbrechenButton.hidden = false;
-
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-
-        nameFeld.focus();
-      }
-
-      if (aktion === "loeschen") {
-        if (!fahrt) {
-          zeigeStatus(
-            "Der Eintrag wurde nicht gefunden.",
-            "fehler"
-          );
-          return;
-        }
-
-        const bestaetigt = window.confirm(
-          `Soll die Fahrt von ${fahrt.name} wirklich gelöscht werden?`
-        );
-
-        if (!bestaetigt) {
-          return;
-        }
-
-        button.disabled = true;
-        button.textContent = "Wird gelöscht …";
-
-        try {
-          await deleteDoc(
-            doc(
-              db,
-              COLLECTION_NAME,
-              dokumentId
-            )
-          );
-
-          if (bearbeiteteDokumentId === dokumentId) {
-            formularZuruecksetzen();
-          }
-
-          zeigeStatus(
-            "Die Fahrt wurde gelöscht.",
-            "erfolg"
-          );
-
-          window.setTimeout(() => {
-            versteckeStatus();
-          }, 3000);
-        } catch (fehler) {
-          console.error("Fehler beim Löschen:", fehler);
-
-          zeigeStatus(
-            `Die Fahrt konnte nicht gelöscht werden.\n` +
-            `Fehlercode: ${fehler.code || "unbekannt"}\n` +
-            `Meldung: ${fehler.message || fehler}`,
-            "fehler"
-          );
-
-          button.disabled = false;
-          button.textContent = "Löschen";
-        }
-      }
+    const counts = {};
+    snapshot.forEach(docSnap => {
+      const data = docSnap.data();
+      const selector = `.slot[data-day="${data.day}"][data-slot="${data.slot}"]`;
+      const slotEl = daysEl.querySelector(selector);
+      if (!slotEl) return;
+      const list = slotEl.querySelector(".entries");
+      const li = document.createElement("li");
+      li.innerHTML = `<span>${escapeHtml(data.name)}</span>
+        <button class="remove-btn" data-id="${docSnap.id}" title="Eintrag entfernen">✕</button>`;
+      list.appendChild(li);
+      const key = data.day + data.slot;
+      counts[key] = (counts[key] || 0) + 1;
     });
 
-
-    /*
-     * Bearbeitung abbrechen
-     */
-    abbrechenButton.addEventListener("click", () => {
-      formularZuruecksetzen();
-      versteckeStatus();
+    document.querySelectorAll(".slot").forEach(slotEl => {
+      const list = slotEl.querySelector(".entries");
+      const empty = slotEl.querySelector(".empty");
+      empty.hidden = list.children.length > 0;
     });
 
+    statusEl.textContent = "";
+  }, (err) => {
+    statusEl.textContent = "Verbindung fehlgeschlagen: " + err.message;
+  });
 
-    /*
-     * Anonyme Anmeldung
-     */
-    onAuthStateChanged(auth, async (benutzer) => {
-      if (benutzer && !firebaseBereit) {
-        firebaseBereit = true;
-        speichernButton.disabled = false;
+  function escapeHtml(str){
+    const d = document.createElement("div");
+    d.textContent = str;
+    return d.innerHTML;
+  }
+</script>
 
-        versteckeStatus();
-        starteLiveAbfrage();
-      }
-    });
-
-
-    /*
-     * App starten
-     */
-    async function starteApp() {
-      zeigeStatus(
-        "Verbindung zu Firebase wird hergestellt …",
-        "info"
-      );
-
-      try {
-        await signInAnonymously(auth);
-      } catch (fehler) {
-        console.error("Anmeldung fehlgeschlagen:", fehler);
-
-        fahrtenListe.textContent =
-          "Firebase-Anmeldung fehlgeschlagen.";
-
-        zeigeStatus(
-          `Anmeldung fehlgeschlagen.\n` +
-          `Fehlercode: ${fehler.code || "unbekannt"}\n` +
-          `Meldung: ${fehler.message || fehler}\n\n` +
-          `Bitte in Firebase Authentication die anonyme Anmeldung aktivieren.`,
-          "fehler"
-        );
-      }
-    }
-
-    starteApp();
-  </script>
 </body>
 </html>
