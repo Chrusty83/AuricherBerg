@@ -39,7 +39,7 @@
   header{
     background: linear-gradient(135deg, var(--himmel) 0%, var(--wiese) 100%);
     color:#fff;
-    padding:44px 24px 60px;
+    padding:44px 24px 90px;
     text-align:center;
     position:relative;
     overflow:hidden;
@@ -47,10 +47,11 @@
   header::after{
     content:"";
     position:absolute;
-    bottom:-1px; left:0; right:0;
-    height:26px;
-    background:var(--hell);
-    clip-path: polygon(0 100%, 4% 0, 8% 100%, 12% 0, 16% 100%, 20% 0, 24% 100%, 28% 0, 32% 100%, 36% 0, 40% 100%, 44% 0, 48% 100%, 52% 0, 56% 100%, 60% 0, 64% 100%, 68% 0, 72% 100%, 76% 0, 80% 100%, 84% 0, 88% 100%, 92% 0, 96% 100%, 100% 0, 100% 100%);
+    bottom:0; left:0; right:0;
+    height:90px;
+    background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 145" preserveAspectRatio="none"><path fill="%23FFF9EE" d="M0,145 L0,70 L60,95 L120,50 L180,90 L240,35 L300,85 L360,45 L420,95 L480,55 L540,20 L600,70 L660,40 L720,90 L780,50 L840,95 L900,60 L960,25 L1020,75 L1080,45 L1140,90 L1200,60 L1200,145 Z"/><g fill="%232F6B45"><polygon points="83,111 95,88 107,111"/><polygon points="85,84 95,61 105,84"/><polygon points="88,58 95,35 102,58"/><polygon points="140,120 150,102 160,120"/><polygon points="142,98 150,79 158,98"/><polygon points="144,76 150,57 156,76"/><polygon points="316,146 330,118 344,146"/><polygon points="318,113 330,85 342,113"/><polygon points="321,80 330,52 339,80"/><polygon points="459,103 470,81 481,103"/><polygon points="461,78 470,56 479,78"/><polygon points="463,52 470,31 477,52"/><polygon points="687,135 700,110 713,135"/><polygon points="689,106 700,80 711,106"/><polygon points="692,76 700,51 708,76"/><polygon points="851,114 860,97 869,114"/><polygon points="853,94 860,76 867,94"/><polygon points="854,73 860,55 866,73"/><polygon points="1066,141 1080,115 1094,141"/><polygon points="1069,110 1080,84 1091,110"/><polygon points="1071,79 1080,53 1089,79"/></g><g fill="%23234E33"><rect x="93" y="106" width="4" height="7"/><rect x="148" y="116" width="4" height="6"/><rect x="327" y="140" width="6" height="9"/><rect x="468" y="98" width="4" height="7"/><rect x="698" y="130" width="5" height="8"/><rect x="858" y="110" width="4" height="6"/><rect x="1077" y="136" width="5" height="8"/></g></svg>');
+    background-repeat:no-repeat;
+    background-size:100% 100%;
   }
   .eyebrow-badge{
     display:inline-block;
@@ -94,12 +95,14 @@
     border:3px solid var(--sonne);
     border-radius:20px;
     padding:18px 22px;
-    margin:-34px auto 32px;
+    margin:-16px auto 32px;
     max-width:560px;
     box-shadow:var(--schatten);
     display:flex;
     gap:12px;
     align-items:center;
+    position:relative;
+    z-index:5;
   }
   .name-bar label{
     font-family:'Baloo 2', sans-serif;
@@ -368,7 +371,7 @@
 <main>
   <div class="name-bar">
     <label for="nameInput">👋 Dein Name</label>
-    <input type="text" id="nameInput" placeholder="z. B. Anna Meyer" autocomplete="name">
+    <input type="text" id="nameInput" placeholder="z. B. Hans Wurschd" autocomplete="name">
   </div>
   <div class="status" id="status">Lade Fahrplan …</div>
 
