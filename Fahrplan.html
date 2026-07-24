@@ -359,6 +359,61 @@
   }
   @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
   @keyframes popIn{ from{transform:scale(0.94); opacity:0;} to{transform:scale(1); opacity:1;} }
+
+  .summary{
+    margin-top:34px;
+    background:var(--karte);
+    border:3px solid var(--himmel);
+    border-radius:20px;
+    padding:20px 24px 22px;
+    box-shadow:var(--schatten);
+  }
+  .summary-title{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:1.2rem;
+    margin:0 0 14px;
+    color:var(--dunkel);
+  }
+  .summary-list{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .summary-row{
+    display:grid;
+    grid-template-columns:110px 1fr 1fr;
+    gap:10px;
+    align-items:center;
+    padding:7px 10px;
+    border-radius:10px;
+    background:var(--hell);
+    font-size:0.9rem;
+  }
+  .summary-row .tag{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    color:var(--dunkel);
+  }
+  .summary-row .part{
+    font-weight:700;
+  }
+  .summary-row .part.offen{
+    color:#a9a08a;
+    font-weight:600;
+    font-style:italic;
+  }
+  .summary-row .part .zeit-klein{
+    font-weight:600;
+    color:var(--text-soft);
+    margin-right:4px;
+  }
+  @media (max-width:480px){
+    .summary-row{
+      grid-template-columns:1fr;
+      gap:2px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -371,11 +426,16 @@
 <main>
   <div class="name-bar">
     <label for="nameInput">👋 Dein Name</label>
-    <input type="text" id="nameInput" placeholder="z. B. Hans Wurschd" autocomplete="name">
+    <input type="text" id="nameInput" placeholder="z. B. Anna Meyer" autocomplete="name">
   </div>
   <div class="status" id="status">Lade Fahrplan …</div>
 
   <div class="days" id="days"></div>
+
+  <section class="summary">
+    <h2 class="summary-title">📋 Kurzübersicht</h2>
+    <div class="summary-list" id="summaryList"></div>
+  </section>
 </main>
 
 <div class="modal-overlay" id="modalOverlay" hidden>
@@ -453,6 +513,20 @@
       modalOverlay.addEventListener("click", onOverlay);
     });
   }
+
+  // Grundgerüst der Kurzübersicht (eine Zeile pro Tag)
+  const summaryList = document.getElementById("summaryList");
+  DAYS.forEach(({ name: day }) => {
+    const row = document.createElement("div");
+    row.className = "summary-row";
+    row.dataset.day = day;
+    row.innerHTML = `
+      <span class="tag">${day}</span>
+      <span class="part" data-slot="bringen">–</span>
+      <span class="part" data-slot="abholen">–</span>
+    `;
+    summaryList.appendChild(row);
+  });
 
   // Grundgerüst der Karten aufbauen
   DAYS.forEach(({ name: day, datum }) => {
@@ -533,6 +607,7 @@
     });
 
     const counts = {};
+    const names = {};
     snapshot.forEach(docSnap => {
       const data = docSnap.data();
       const selector = `.slot[data-day="${data.day}"][data-slot="${data.slot}"]`;
@@ -545,6 +620,7 @@
       list.appendChild(li);
       const key = data.day + data.slot;
       counts[key] = (counts[key] || 0) + 1;
+      names[key] = data.name;
     });
     slotCounts = counts;
 
@@ -557,6 +633,22 @@
       empty.hidden = list.children.length > 0;
       addBtn.disabled = belegt;
       addBtn.textContent = belegt ? "Bereits belegt" : "+ Eintragen";
+    });
+
+    // Kurzübersicht unten aktualisieren
+    SLOTS.forEach(s => {
+      DAYS.forEach(({ name: day }) => {
+        const key = day + s.key;
+        const el = summaryList.querySelector(`.summary-row[data-day="${day}"] .part[data-slot="${s.key}"]`);
+        if (!el) return;
+        if (names[key]) {
+          el.classList.remove("offen");
+          el.innerHTML = `<span class="zeit-klein">${s.icon} ${s.zeit}</span>${escapeHtml(names[key])}`;
+        } else {
+          el.classList.add("offen");
+          el.innerHTML = `<span class="zeit-klein">${s.icon} ${s.zeit}</span>noch offen`;
+        }
+      });
     });
 
     statusEl.textContent = "";
