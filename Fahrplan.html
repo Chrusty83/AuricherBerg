@@ -113,7 +113,8 @@
     color:var(--birke);
     padding:14px 20px;
     display:flex;
-    align-items:baseline;
+    align-items:center;
+    justify-content:space-between;
     gap:10px;
   }
   .day-head .eyebrow{
@@ -122,12 +123,22 @@
     letter-spacing:0.08em;
     opacity:0.75;
     font-weight:600;
+    display:block;
   }
   .day-head h2{
     font-family:'Fraunces', serif;
     font-weight:600;
     font-size:1.3rem;
     margin:0;
+  }
+  .day-head .datum{
+    font-size:0.9rem;
+    font-weight:600;
+    color:var(--lagerfeuer-hell);
+    white-space:nowrap;
+    background:rgba(0,0,0,0.15);
+    padding:4px 10px;
+    border-radius:20px;
   }
   .slots{
     display:grid;
@@ -217,13 +228,79 @@
     .slot + .slot{border-left:none; border-top:1px dashed var(--linie);}
     .name-bar{flex-direction:column; align-items:stretch;}
   }
+
+  .modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(34,57,44,0.55);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:100;
+    animation:fadeIn 0.15s ease-out;
+  }
+  .modal-overlay[hidden]{ display:none; }
+  .modal{
+    background:var(--birke);
+    border-radius:16px;
+    padding:26px 26px 22px;
+    max-width:380px;
+    width:100%;
+    box-shadow:0 12px 32px rgba(0,0,0,0.25);
+    border:1px solid var(--linie);
+    animation:popIn 0.18s ease-out;
+  }
+  .modal h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.2rem;
+    margin:0 0 10px;
+    color:var(--moos);
+  }
+  .modal p{
+    margin:0 0 22px;
+    font-size:0.95rem;
+    color:#4a4536;
+    line-height:1.4;
+  }
+  .modal-actions{
+    display:flex;
+    gap:10px;
+    justify-content:flex-end;
+  }
+  .modal-cancel, .modal-confirm{
+    border:none;
+    border-radius:8px;
+    padding:9px 16px;
+    font-family:inherit;
+    font-weight:600;
+    font-size:0.9rem;
+    cursor:pointer;
+  }
+  .modal-cancel{
+    background:#e6e0d1;
+    color:var(--moos);
+  }
+  .modal-cancel:hover{
+    background:#d8d2c2;
+  }
+  .modal-confirm{
+    background:#c0492a;
+    color:#fff;
+  }
+  .modal-confirm:hover{
+    background:#a83c21;
+  }
+  @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+  @keyframes popIn{ from{transform:scale(0.94); opacity:0;} to{transform:scale(1); opacity:1;} }
 </style>
 </head>
 <body>
 
 <header>
   <h1>Fahrdienst Feriencamp Auricher Berg</h1>
-  <p>Eine Woche · Montag bis Sonntag · Bringen &amp; Abholen</p>
+  <p>10.08. – 16.08.2026 · Bringen &amp; Abholen</p>
 </header>
 
 <main>
@@ -235,6 +312,17 @@
 
   <div class="days" id="days"></div>
 </main>
+
+<div class="modal-overlay" id="modalOverlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <h3 id="modalTitle">Eintrag entfernen?</h3>
+    <p id="modalText"></p>
+    <div class="modal-actions">
+      <button type="button" class="modal-cancel" id="modalCancel">Abbrechen</button>
+      <button type="button" class="modal-confirm" id="modalConfirm">Entfernen</button>
+    </div>
+  </div>
+</div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
@@ -257,7 +345,15 @@
   const db = getFirestore(app);
   const col = collection(db, "fahrdienst_eintraege");
 
-  const DAYS = ["Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag","Sonntag"];
+  const DAYS = [
+    { name: "Montag",    datum: "10.08.2026" },
+    { name: "Dienstag",  datum: "11.08.2026" },
+    { name: "Mittwoch",  datum: "12.08.2026" },
+    { name: "Donnerstag",datum: "13.08.2026" },
+    { name: "Freitag",   datum: "14.08.2026" },
+    { name: "Samstag",   datum: "15.08.2026" },
+    { name: "Sonntag",   datum: "16.08.2026" }
+  ];
   const SLOTS = [
     { key: "bringen", label: "Bringen", icon: "🌅" },
     { key: "abholen", label: "Abholen", icon: "🌇" }
@@ -267,14 +363,43 @@
   const statusEl = document.getElementById("status");
   const nameInput = document.getElementById("nameInput");
 
+  // Eigenes Bestätigungs-Modal statt window.confirm()
+  const modalOverlay = document.getElementById("modalOverlay");
+  const modalText = document.getElementById("modalText");
+  const modalCancel = document.getElementById("modalCancel");
+  const modalConfirm = document.getElementById("modalConfirm");
+
+  function askConfirm(text) {
+    return new Promise((resolve) => {
+      modalText.textContent = text;
+      modalOverlay.hidden = false;
+      const cleanup = (result) => {
+        modalOverlay.hidden = true;
+        modalCancel.removeEventListener("click", onCancel);
+        modalConfirm.removeEventListener("click", onConfirm);
+        modalOverlay.removeEventListener("click", onOverlay);
+        resolve(result);
+      };
+      const onCancel = () => cleanup(false);
+      const onConfirm = () => cleanup(true);
+      const onOverlay = (e) => { if (e.target === modalOverlay) cleanup(false); };
+      modalCancel.addEventListener("click", onCancel);
+      modalConfirm.addEventListener("click", onConfirm);
+      modalOverlay.addEventListener("click", onOverlay);
+    });
+  }
+
   // Grundgerüst der Karten aufbauen
-  DAYS.forEach(day => {
+  DAYS.forEach(({ name: day, datum }) => {
     const card = document.createElement("div");
     card.className = "day-card";
     card.innerHTML = `
       <div class="day-head">
-        <span class="eyebrow">Tag</span>
-        <h2>${day}</h2>
+        <div>
+          <span class="eyebrow">Tag</span>
+          <h2>${day}</h2>
+        </div>
+        <span class="datum">${datum}</span>
       </div>
       <div class="slots">
         ${SLOTS.map(s => `
@@ -320,12 +445,12 @@
     }
   });
 
-  // Löschen eines eigenen Eintrags – mit Bestätigung
+  // Löschen eines eigenen Eintrags – mit Bestätigung über eigenes Modal
   daysEl.addEventListener("click", async (e) => {
     if (!e.target.classList.contains("remove-btn")) return;
     const id = e.target.dataset.id;
     const name = e.target.dataset.name;
-    const confirmed = window.confirm(`Eintrag von "${name}" wirklich entfernen?`);
+    const confirmed = await askConfirm(`Eintrag von "${name}" wirklich entfernen?`);
     if (!confirmed) return;
     try {
       await deleteDoc(doc(db, "fahrdienst_eintraege", id));
