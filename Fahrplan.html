@@ -207,6 +207,11 @@
     outline:2px solid var(--moos);
     outline-offset:2px;
   }
+  .add-btn:disabled{
+    background:#d8d2c2;
+    color:#8a8272;
+    cursor:not-allowed;
+  }
   @media (max-width:520px){
     .slots{grid-template-columns:1fr;}
     .slot + .slot{border-left:none; border-top:1px dashed var(--linie);}
@@ -285,6 +290,9 @@
     daysEl.appendChild(card);
   });
 
+  // Wird bei jedem Snapshot aktualisiert: wie viele Einträge hat welcher Slot
+  let slotCounts = {};
+
   // Klick-Handler für Eintragen-Buttons
   daysEl.addEventListener("click", async (e) => {
     if (!e.target.classList.contains("add-btn")) return;
@@ -297,21 +305,28 @@
     const slotEl = e.target.closest(".slot");
     const day = slotEl.dataset.day;
     const slot = slotEl.dataset.slot;
+    const key = day + slot;
+    if ((slotCounts[key] || 0) >= 1) {
+      statusEl.textContent = "Für diesen Termin ist bereits jemand eingetragen.";
+      return;
+    }
     e.target.disabled = true;
     try {
       await addDoc(col, { day, slot, name, timestamp: serverTimestamp() });
       statusEl.textContent = "";
     } catch (err) {
       statusEl.textContent = "Fehler beim Speichern: " + err.message;
-    } finally {
       e.target.disabled = false;
     }
   });
 
-  // Löschen eines eigenen Eintrags
+  // Löschen eines eigenen Eintrags – mit Bestätigung
   daysEl.addEventListener("click", async (e) => {
     if (!e.target.classList.contains("remove-btn")) return;
     const id = e.target.dataset.id;
+    const name = e.target.dataset.name;
+    const confirmed = window.confirm(`Eintrag von "${name}" wirklich entfernen?`);
+    if (!confirmed) return;
     try {
       await deleteDoc(doc(db, "fahrdienst_eintraege", id));
     } catch (err) {
@@ -336,16 +351,22 @@
       const list = slotEl.querySelector(".entries");
       const li = document.createElement("li");
       li.innerHTML = `<span>${escapeHtml(data.name)}</span>
-        <button class="remove-btn" data-id="${docSnap.id}" title="Eintrag entfernen">✕</button>`;
+        <button class="remove-btn" data-id="${docSnap.id}" data-name="${escapeHtml(data.name)}" title="Eintrag entfernen">✕</button>`;
       list.appendChild(li);
       const key = data.day + data.slot;
       counts[key] = (counts[key] || 0) + 1;
     });
+    slotCounts = counts;
 
     document.querySelectorAll(".slot").forEach(slotEl => {
       const list = slotEl.querySelector(".entries");
       const empty = slotEl.querySelector(".empty");
+      const addBtn = slotEl.querySelector(".add-btn");
+      const key = slotEl.dataset.day + slotEl.dataset.slot;
+      const belegt = (counts[key] || 0) >= 1;
       empty.hidden = list.children.length > 0;
+      addBtn.disabled = belegt;
+      addBtn.textContent = belegt ? "Bereits belegt" : "+ Eintragen";
     });
 
     statusEl.textContent = "";
