@@ -85,6 +85,14 @@
     padding:6px 18px;
     border-radius:30px;
   }
+  header p.info-zeile{
+    display:block;
+    margin:10px auto 0;
+    font-size:0.85rem;
+    font-weight:600;
+    background:rgba(31,59,77,0.28);
+    max-width:fit-content;
+  }
   main{
     max-width:960px;
     margin:0 auto;
@@ -421,6 +429,7 @@
 <header>
   <h1>Auricher Berg</h1>
   <p>🏕️ 10.08.2026 – 16.08.2026</p>
+  <p class="info-zeile">🌅 Treffpunkt zum Abholen: 8:10 Uhr · Start am Auricher Berg: 8:30 Uhr</p>
 </header>
 
 <main>
@@ -480,7 +489,7 @@
     { name: "Sonntag",    datum: "16.08.2026" }
   ];
   const SLOTS = [
-    { key: "bringen", label: "Bringen", zeit: "8:30 Uhr", icon: "🌅" },
+    { key: "bringen", label: "Bringen", zeit: "8:10 Uhr", icon: "🌅" },
     { key: "abholen", label: "Abholen", zeit: "17:00 Uhr", icon: "🌇" }
   ];
 
