@@ -3,466 +3,692 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Auricher Berg · Fahrgemeinschaft</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --sonne:#FFC93C;
-    --sonne-dunkel:#E8A80F;
-    --himmel:#3EC1D3;
-    --himmel-dunkel:#1D9FB2;
-    --wiese:#4CAF6D;
-    --wiese-dunkel:#358F52;
-    --beere:#FF6B5B;
-    --beere-dunkel:#E5493A;
-    --dunkel:#1F3B4D;
-    --hell:#FFF9EE;
-    --karte:#ffffff;
-    --linie:#f0dfb8;
-    --text-soft:#5b6a72;
-    --schatten: 0 6px 0 rgba(31,59,77,0.12);
+  :root {
+    --sonne: #FFC93C;
+    --sonne-dunkel: #E8A80F;
+    --himmel: #3EC1D3;
+    --himmel-dunkel: #1D9FB2;
+    --wiese: #4CAF6D;
+    --wiese-dunkel: #358F52;
+    --beere: #FF6B5B;
+    --beere-dunkel: #E5493A;
+    --dunkel: #1F3B4D;
+    --hell: #FFF9EE;
+    --karte: #ffffff;
+    --linie: #f0dfb8;
+    --text-soft: #5b6a72;
+    --schatten: 0 6px 0 rgba(31, 59, 77, 0.12);
   }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
     background:
-      radial-gradient(circle at 8% 12%, rgba(255,201,60,0.35) 0, transparent 22%),
-      radial-gradient(circle at 92% 8%, rgba(62,193,211,0.3) 0, transparent 24%),
-      radial-gradient(circle at 88% 90%, rgba(255,107,91,0.25) 0, transparent 22%),
-      radial-gradient(circle at 5% 85%, rgba(76,175,109,0.3) 0, transparent 22%),
+      radial-gradient(circle at 8% 12%, rgba(255, 201, 60, 0.35) 0, transparent 22%),
+      radial-gradient(circle at 92% 8%, rgba(62, 193, 211, 0.3) 0, transparent 24%),
+      radial-gradient(circle at 88% 90%, rgba(255, 107, 91, 0.25) 0, transparent 22%),
+      radial-gradient(circle at 5% 85%, rgba(76, 175, 109, 0.3) 0, transparent 22%),
       var(--hell);
-    color:var(--dunkel);
-    font-family:'Nunito', sans-serif;
-    -webkit-font-smoothing:antialiased;
+
+    color: var(--dunkel);
+    font-family: "Nunito", sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
-  header{
+
+  header {
     background: linear-gradient(135deg, var(--himmel) 0%, var(--wiese) 100%);
-    color:#fff;
-    padding:44px 24px 90px;
-    text-align:center;
-    position:relative;
-    overflow:hidden;
-  }
-  header::after{
-    content:"";
-    position:absolute;
-    bottom:0; left:0; right:0;
-    height:90px;
-    background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 145" preserveAspectRatio="none"><path fill="%23FFF9EE" d="M0,145 L0,70 L60,95 L120,50 L180,90 L240,35 L300,85 L360,45 L420,95 L480,55 L540,20 L600,70 L660,40 L720,90 L780,50 L840,95 L900,60 L960,25 L1020,75 L1080,45 L1140,90 L1200,60 L1200,145 Z"/><g fill="%232F6B45"><polygon points="83,111 95,88 107,111"/><polygon points="85,84 95,61 105,84"/><polygon points="88,58 95,35 102,58"/><polygon points="140,120 150,102 160,120"/><polygon points="142,98 150,79 158,98"/><polygon points="144,76 150,57 156,76"/><polygon points="316,146 330,118 344,146"/><polygon points="318,113 330,85 342,113"/><polygon points="321,80 330,52 339,80"/><polygon points="459,103 470,81 481,103"/><polygon points="461,78 470,56 479,78"/><polygon points="463,52 470,31 477,52"/><polygon points="687,135 700,110 713,135"/><polygon points="689,106 700,80 711,106"/><polygon points="692,76 700,51 708,76"/><polygon points="851,114 860,97 869,114"/><polygon points="853,94 860,76 867,94"/><polygon points="854,73 860,55 866,73"/><polygon points="1066,141 1080,115 1094,141"/><polygon points="1069,110 1080,84 1091,110"/><polygon points="1071,79 1080,53 1089,79"/></g><g fill="%23234E33"><rect x="93" y="106" width="4" height="7"/><rect x="148" y="116" width="4" height="6"/><rect x="327" y="140" width="6" height="9"/><rect x="468" y="98" width="4" height="7"/><rect x="698" y="130" width="5" height="8"/><rect x="858" y="110" width="4" height="6"/><rect x="1077" y="136" width="5" height="8"/></g></svg>');
-    background-repeat:no-repeat;
-    background-size:100% 100%;
-  }
-  .eyebrow-badge{
-    display:inline-block;
-    background:rgba(255,255,255,0.25);
-    border:1.5px solid rgba(255,255,255,0.6);
-    color:#fff;
-    font-family:'Baloo 2', sans-serif;
-    font-weight:700;
-    font-size:1.15rem;
-    letter-spacing:0.06em;
-    text-transform:uppercase;
-    padding:7px 22px;
-    border-radius:30px;
-    margin-bottom:16px;
-  }
-  header h1{
-    font-family:'Baloo 2', sans-serif;
-    font-weight:800;
-    font-size:clamp(2.4rem, 7vw, 3.6rem);
-    margin:0 0 10px;
-    letter-spacing:-0.01em;
-    text-shadow: 0 3px 0 rgba(31,59,77,0.18);
-  }
-  header p{
-    margin:0;
-    font-size:1.1rem;
-    color:#fff;
-    font-weight:700;
-    background:rgba(31,59,77,0.2);
-    display:inline-block;
-    padding:6px 18px;
-    border-radius:30px;
-  }
-  header p.info-zeile{
-    display:block;
-    margin:10px auto 0;
-    font-size:0.85rem;
-    font-weight:600;
-    background:rgba(31,59,77,0.28);
-    max-width:fit-content;
-  }
-  main{
-    max-width:960px;
-    margin:0 auto;
-    padding:24px 20px 90px;
-  }
-  .name-bar{
-    background:var(--karte);
-    border:3px solid var(--sonne);
-    border-radius:20px;
-    padding:18px 22px;
-    margin:-16px auto 12px;
-    max-width:560px;
-    box-shadow:var(--schatten);
-    display:flex;
-    gap:12px;
-    align-items:center;
-    position:relative;
-    z-index:5;
-  }
-  .name-bar label{
-    font-family:'Baloo 2', sans-serif;
-    font-weight:700;
-    font-size:1rem;
-    white-space:nowrap;
-    color:var(--dunkel);
-  }
-  .name-bar input{
-    flex:1;
-    border:2px solid var(--linie);
-    border-radius:12px;
-    padding:10px 14px;
-    font-size:1rem;
-    font-family:inherit;
-    color:var(--dunkel);
-  }
-  .name-bar input:focus{
-    outline:none;
-    border-color:var(--himmel);
-  }
-  .status{
-    text-align:center;
-    font-size:0.95rem;
-    font-weight:700;
-    color:var(--beere-dunkel);
-    margin-bottom:10px;
-    min-height:1.2em;
-  }
-  .days{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:22px;
-  }
-  .day-card{
-    background:var(--karte);
-    border-radius:22px;
-    box-shadow:var(--schatten);
-    overflow:hidden;
-    border:3px solid var(--accent, var(--himmel));
-  }
-  .day-card:nth-child(7n+1){ --accent: var(--himmel); }
-  .day-card:nth-child(7n+2){ --accent: var(--wiese); }
-  .day-card:nth-child(7n+3){ --accent: var(--sonne-dunkel); }
-  .day-card:nth-child(7n+4){ --accent: var(--beere); }
-  .day-card:nth-child(7n+5){ --accent: var(--himmel-dunkel); }
-  .day-card:nth-child(7n+6){ --accent: var(--wiese-dunkel); }
-  .day-card:nth-child(7n+7){ --accent: var(--sonne); }
-  .day-head{
-    background:var(--accent, var(--himmel));
-    color:#fff;
-    padding:14px 20px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-  }
-  .day-head .eyebrow{
-    font-size:0.72rem;
-    text-transform:uppercase;
-    letter-spacing:0.08em;
-    opacity:0.85;
-    font-weight:700;
-    display:block;
-  }
-  .day-head h2{
-    font-family:'Baloo 2', sans-serif;
-    font-weight:700;
-    font-size:1.5rem;
-    margin:0;
-  }
-  .day-head .datum{
-    font-size:0.9rem;
-    font-weight:800;
-    color:var(--dunkel);
-    white-space:nowrap;
-    background:#fff;
-    padding:5px 12px;
-    border-radius:20px;
-  }
-  .slots{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-  }
-  .slot{
-    padding:16px 18px 18px;
-  }
-  .slot + .slot{
-    border-left:2px dashed var(--linie);
-  }
-  .slot-title{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-family:'Baloo 2', sans-serif;
-    font-weight:600;
-    font-size:1rem;
-    margin-bottom:10px;
-    color:var(--dunkel);
-  }
-  .slot-title .icon{
-    font-size:1.25rem;
-  }
-  .slot-title .zeit{
-    font-family:'Nunito', sans-serif;
-    font-weight:700;
-    font-size:0.78rem;
-    color:var(--text-soft);
-    background:var(--hell);
-    padding:2px 8px;
-    border-radius:10px;
-    margin-left:auto;
-  }
-  .entries{
-    list-style:none;
-    margin:0 0 12px;
-    padding:0;
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-    min-height:8px;
-  }
-  .entries li{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    background:var(--hell);
-    border-radius:10px;
-    padding:7px 10px;
-    font-size:0.95rem;
-    font-weight:700;
-  }
-  .entries li button{
-    background:none;
-    border:none;
-    color:var(--beere-dunkel);
-    cursor:pointer;
-    font-size:1rem;
-    padding:0 2px;
-    font-weight:700;
-  }
-  .entries li button:hover{
-    transform:scale(1.15);
-  }
-  .empty{
-    color:#a9a08a;
-    font-size:0.88rem;
-    font-style:italic;
-    font-weight:600;
-    margin:0 0 12px;
-  }
-  .add-btn{
-    width:100%;
-    background:var(--accent, var(--sonne-dunkel));
-    color:#fff;
-    border:none;
-    border-radius:12px;
-    padding:10px 10px;
-    font-family:'Baloo 2', sans-serif;
-    font-weight:700;
-    font-size:0.95rem;
-    cursor:pointer;
-    box-shadow:0 3px 0 rgba(31,59,77,0.2);
-    transition:transform 0.1s;
-  }
-  .add-btn:hover{
-    transform:translateY(-1px);
-  }
-  .add-btn:active{
-    transform:translateY(2px);
-    box-shadow:0 1px 0 rgba(31,59,77,0.2);
-  }
-  .add-btn:focus-visible{
-    outline:3px solid var(--dunkel);
-    outline-offset:2px;
-  }
-  .add-btn:disabled{
-    background:#e3ddc9;
-    color:#a9a08a;
-    cursor:not-allowed;
-    box-shadow:none;
-    transform:none;
-  }
-  @media (max-width:520px){
-    .slots{grid-template-columns:1fr;}
-    .slot + .slot{border-left:none; border-top:2px dashed var(--linie);}
-    .name-bar{flex-direction:column; align-items:stretch;}
+    color: #fff;
+    padding: 44px 24px 90px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
   }
 
-  .modal-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(31,59,77,0.6);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    z-index:100;
-    animation:fadeIn 0.15s ease-out;
-  }
-  .modal-overlay[hidden]{ display:none; }
-  .modal{
-    background:var(--hell);
-    border-radius:22px;
-    padding:28px 26px 22px;
-    max-width:380px;
-    width:100%;
-    box-shadow:0 14px 0 rgba(31,59,77,0.15);
-    border:3px solid var(--beere);
-    animation:popIn 0.18s ease-out;
-  }
-  .modal h3{
-    font-family:'Baloo 2', sans-serif;
-    font-weight:700;
-    font-size:1.3rem;
-    margin:0 0 10px;
-    color:var(--dunkel);
-  }
-  .modal p{
-    margin:0 0 22px;
-    font-size:0.98rem;
-    color:var(--text-soft);
-    line-height:1.4;
-    font-weight:600;
-  }
-  .modal-actions{
-    display:flex;
-    gap:10px;
-    justify-content:flex-end;
-  }
-  .modal-cancel, .modal-confirm{
-    border:none;
-    border-radius:12px;
-    padding:10px 18px;
-    font-family:'Baloo 2', sans-serif;
-    font-weight:700;
-    font-size:0.95rem;
-    cursor:pointer;
-    box-shadow:0 3px 0 rgba(31,59,77,0.2);
-  }
-  .modal-cancel{
-    background:#e3ddc9;
-    color:var(--dunkel);
-  }
-  .modal-cancel:hover{
-    background:#d6cfb4;
-  }
-  .modal-confirm{
-    background:var(--beere-dunkel);
-    color:#fff;
-  }
-  .modal-confirm:hover{
-    background:#cf3c2e;
-  }
-  @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
-  @keyframes popIn{ from{transform:scale(0.94); opacity:0;} to{transform:scale(1); opacity:1;} }
+  header::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 90px;
 
-  .summary{
-    margin-top:34px;
-    background:var(--karte);
-    border:3px solid var(--himmel);
-    border-radius:20px;
-    padding:20px 24px 22px;
-    box-shadow:var(--schatten);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 145" preserveAspectRatio="none"><path fill="%23FFF9EE" d="M0,145 L0,70 L60,95 L120,50 L180,90 L240,35 L300,85 L360,45 L420,95 L480,55 L540,20 L600,70 L660,40 L720,90 L780,50 L840,95 L900,60 L960,25 L1020,75 L1080,45 L1140,90 L1200,60 L1200,145 Z"/><g fill="%232F6B45"><polygon points="83,111 95,88 107,111"/><polygon points="85,84 95,61 105,84"/><polygon points="88,58 95,35 102,58"/><polygon points="140,120 150,102 160,120"/><polygon points="142,98 150,79 158,98"/><polygon points="144,76 150,57 156,76"/><polygon points="316,146 330,118 344,146"/><polygon points="318,113 330,85 342,113"/><polygon points="321,80 330,52 339,80"/><polygon points="459,103 470,81 481,103"/><polygon points="461,78 470,56 479,78"/><polygon points="463,52 470,31 477,52"/><polygon points="687,135 700,110 713,135"/><polygon points="689,106 700,80 711,106"/><polygon points="692,76 700,51 708,76"/><polygon points="851,114 860,97 869,114"/><polygon points="853,94 860,76 867,94"/><polygon points="854,73 860,55 866,73"/><polygon points="1066,141 1080,115 1094,141"/><polygon points="1069,110 1080,84 1091,110"/><polygon points="1071,79 1080,53 1089,79"/></g><g fill="%23234E33"><rect x="93" y="106" width="4" height="7"/><rect x="148" y="116" width="4" height="6"/><rect x="327" y="140" width="6" height="9"/><rect x="468" y="98" width="4" height="7"/><rect x="698" y="130" width="5" height="8"/><rect x="858" y="110" width="4" height="6"/><rect x="1077" y="136" width="5" height="8"/></g></svg>');
+
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
   }
-  .summary-title{
-    font-family:'Baloo 2', sans-serif;
-    font-weight:700;
-    font-size:1.2rem;
-    margin:0 0 14px;
-    color:var(--dunkel);
+
+  header h1 {
+    font-family: "Baloo 2", sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.4rem, 7vw, 3.6rem);
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+    text-shadow: 0 3px 0 rgba(31, 59, 77, 0.18);
   }
-  .summary-list{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
+
+  header p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #fff;
+    font-weight: 700;
+    background: rgba(31, 59, 77, 0.2);
+    display: inline-block;
+    padding: 6px 18px;
+    border-radius: 30px;
   }
-  .summary-row{
-    display:grid;
-    grid-template-columns:110px 1fr 1fr;
-    gap:10px;
-    align-items:center;
-    padding:7px 10px;
-    border-radius:10px;
-    background:var(--hell);
-    font-size:0.9rem;
+
+  header p.info-zeile {
+    display: block;
+    margin: 10px auto 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: rgba(31, 59, 77, 0.28);
+    max-width: fit-content;
   }
-  .summary-row .tag{
-    font-family:'Baloo 2', sans-serif;
-    font-weight:700;
-    color:var(--dunkel);
+
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px 20px 90px;
   }
-  .summary-row .part{
-    font-weight:700;
+
+  .name-bar {
+    background: var(--karte);
+    border: 3px solid var(--sonne);
+    border-radius: 20px;
+    padding: 18px 22px;
+    margin: -16px auto 12px;
+    max-width: 560px;
+    box-shadow: var(--schatten);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    position: relative;
+    z-index: 5;
   }
-  .summary-row .part.offen{
-    color:#a9a08a;
-    font-weight:600;
-    font-style:italic;
+
+  .name-bar label {
+    font-family: "Baloo 2", sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    white-space: nowrap;
+    color: var(--dunkel);
   }
-  .summary-row .part .zeit-klein{
-    font-weight:600;
-    color:var(--text-soft);
-    margin-right:4px;
+
+  .name-bar input {
+    flex: 1;
+    min-width: 0;
+    border: 2px solid var(--linie);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: var(--dunkel);
   }
-  @media (max-width:480px){
-    .summary-row{
-      grid-template-columns:1fr;
-      gap:2px;
+
+  .name-bar input:focus {
+    outline: none;
+    border-color: var(--himmel);
+  }
+
+  .status {
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--beere-dunkel);
+    margin-bottom: 10px;
+    min-height: 1.2em;
+  }
+
+  .days {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .day-card {
+    background: var(--karte);
+    border-radius: 22px;
+    box-shadow: var(--schatten);
+    overflow: hidden;
+    border: 3px solid var(--accent, var(--himmel));
+  }
+
+  .day-card:nth-child(7n+1) {
+    --accent: var(--himmel);
+  }
+
+  .day-card:nth-child(7n+2) {
+    --accent: var(--wiese);
+  }
+
+  .day-card:nth-child(7n+3) {
+    --accent: var(--sonne-dunkel);
+  }
+
+  .day-card:nth-child(7n+4) {
+    --accent: var(--beere);
+  }
+
+  .day-card:nth-child(7n+5) {
+    --accent: var(--himmel-dunkel);
+  }
+
+  .day-card:nth-child(7n+6) {
+    --accent: var(--wiese-dunkel);
+  }
+
+  .day-card:nth-child(7n+7) {
+    --accent: var(--sonne);
+  }
+
+  .day-head {
+    background: var(--accent, var(--himmel));
+    color: #fff;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .day-head .eyebrow {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.85;
+    font-weight: 700;
+    display: block;
+  }
+
+  .day-head h2 {
+    font-family: "Baloo 2", sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .day-head .datum {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--dunkel);
+    white-space: nowrap;
+    background: #fff;
+    padding: 5px 12px;
+    border-radius: 20px;
+  }
+
+  .slots {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .slot {
+    padding: 16px 18px 18px;
+  }
+
+  .slot + .slot {
+    border-left: 2px dashed var(--linie);
+  }
+
+  .slot-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Baloo 2", sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: var(--dunkel);
+  }
+
+  .slot-title .icon {
+    font-size: 1.25rem;
+  }
+
+  .slot-title .zeit {
+    font-family: "Nunito", sans-serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    color: var(--text-soft);
+    background: var(--hell);
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  .slot-location {
+    margin: 0 0 12px;
+    padding: 7px 10px;
+    border-radius: 10px;
+    background: var(--hell);
+    color: var(--text-soft);
+    font-size: 0.84rem;
+    line-height: 1.35;
+    font-weight: 700;
+  }
+
+  .slot-location strong {
+    color: var(--dunkel);
+  }
+
+  .entries {
+    list-style: none;
+    margin: 0 0 12px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 8px;
+  }
+
+  .entries li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    background: var(--hell);
+    border-radius: 10px;
+    padding: 7px 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .entries li span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .entries li button {
+    background: none;
+    border: none;
+    color: var(--beere-dunkel);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0 2px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .entries li button:hover {
+    transform: scale(1.15);
+  }
+
+  .empty {
+    color: #a9a08a;
+    font-size: 0.88rem;
+    font-style: italic;
+    font-weight: 600;
+    margin: 0 0 12px;
+  }
+
+  .add-btn {
+    width: 100%;
+    background: var(--accent, var(--sonne-dunkel));
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 10px;
+    font-family: "Baloo 2", sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 3px 0 rgba(31, 59, 77, 0.2);
+    transition: transform 0.1s;
+  }
+
+  .add-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .add-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 rgba(31, 59, 77, 0.2);
+  }
+
+  .add-btn:focus-visible {
+    outline: 3px solid var(--dunkel);
+    outline-offset: 2px;
+  }
+
+  .add-btn:disabled {
+    background: #e3ddc9;
+    color: #8f8875;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(31, 59, 77, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 100;
+    animation: fadeIn 0.15s ease-out;
+  }
+
+  .modal-overlay[hidden] {
+    display: none;
+  }
+
+  .modal {
+    background: var(--hell);
+    border-radius: 22px;
+    padding: 28px 26px 22px;
+    max-width: 380px;
+    width: 100%;
+    box-shadow: 0 14px 0 rgba(31, 59, 77, 0.15);
+    border: 3px solid var(--beere);
+    animation: popIn 0.18s ease-out;
+  }
+
+  .modal h3 {
+    font-family: "Baloo 2", sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin: 0 0 10px;
+    color: var(--dunkel);
+  }
+
+  .modal p {
+    margin: 0 0 22px;
+    font-size: 0.98rem;
+    color: var(--text-soft);
+    line-height: 1.4;
+    font-weight: 600;
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  .modal-cancel,
+  .modal-confirm {
+    border: none;
+    border-radius: 12px;
+    padding: 10px 18px;
+    font-family: "Baloo 2", sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 3px 0 rgba(31, 59, 77, 0.2);
+  }
+
+  .modal-cancel {
+    background: #e3ddc9;
+    color: var(--dunkel);
+  }
+
+  .modal-cancel:hover {
+    background: #d6cfb4;
+  }
+
+  .modal-confirm {
+    background: var(--beere-dunkel);
+    color: #fff;
+  }
+
+  .modal-confirm:hover {
+    background: #cf3c2e;
+  }
+
+  .summary {
+    margin-top: 34px;
+    background: var(--karte);
+    border: 3px solid var(--himmel);
+    border-radius: 20px;
+    padding: 20px 24px 22px;
+    box-shadow: var(--schatten);
+  }
+
+  .summary-title {
+    font-family: "Baloo 2", sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin: 0 0 14px;
+    color: var(--dunkel);
+  }
+
+  .summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .summary-row {
+    display: grid;
+    grid-template-columns: 110px 1fr 1fr;
+    gap: 10px;
+    align-items: start;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: var(--hell);
+    font-size: 0.9rem;
+  }
+
+  .summary-row .tag {
+    font-family: "Baloo 2", sans-serif;
+    font-weight: 700;
+    color: var(--dunkel);
+  }
+
+  .summary-row .part {
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  .summary-row .part.offen {
+    color: #a9a08a;
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  .summary-row .zeit-klein {
+    display: block;
+    font-weight: 700;
+    color: var(--dunkel);
+    margin-bottom: 2px;
+  }
+
+  .summary-row .ort-klein {
+    display: block;
+    font-weight: 600;
+    color: var(--text-soft);
+    margin-bottom: 2px;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes popIn {
+    from {
+      transform: scale(0.94);
+      opacity: 0;
+    }
+
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 600px) {
+    header {
+      padding: 36px 16px 84px;
+    }
+
+    header p {
+      font-size: 0.95rem;
+    }
+
+    main {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .name-bar {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 16px;
+    }
+
+    .slots {
+      grid-template-columns: 1fr;
+    }
+
+    .slot + .slot {
+      border-left: none;
+      border-top: 2px dashed var(--linie);
+    }
+
+    .day-head {
+      padding: 13px 15px;
+    }
+
+    .day-head h2 {
+      font-size: 1.35rem;
+    }
+
+    .day-head .datum {
+      font-size: 0.78rem;
+      padding: 5px 9px;
+    }
+
+    .slot {
+      padding: 15px;
+    }
+
+    .summary {
+      padding: 17px 14px 19px;
+    }
+
+    .summary-row {
+      grid-template-columns: 1fr;
+      gap: 5px;
+    }
+
+    .summary-row .tag {
+      font-size: 1rem;
+      border-bottom: 1px dashed var(--linie);
+      padding-bottom: 3px;
+      margin-bottom: 2px;
     }
   }
 </style>
 </head>
+
 <body>
 
 <header>
   <h1>Auricher Berg</h1>
+
   <p>🏕️ 10.08.2026 – 16.08.2026</p>
-  <p class="info-zeile">🌅 Treffpunkt zum Abholen: 8:10 Uhr · Start am Auricher Berg: 8:30 Uhr</p>
+
+  <p class="info-zeile">
+    🚗 Bitte die unterschiedlichen Zeiten und Treffpunkte der einzelnen Tage beachten
+  </p>
 </header>
 
 <main>
+
   <div class="name-bar">
     <label for="nameInput">👋 Dein Name</label>
-    <input type="text" id="nameInput" placeholder="z. B. Optimus Prime" autocomplete="name">
+
+    <input
+      type="text"
+      id="nameInput"
+      placeholder="z. B. Optimus Prime"
+      autocomplete="name"
+    >
   </div>
-  <div class="status" id="status">Lade Fahrplan …</div>
+
+  <div class="status" id="status">
+    Lade Fahrplan …
+  </div>
 
   <div class="days" id="days"></div>
 
   <section class="summary">
     <h2 class="summary-title">📋 Kurzübersicht</h2>
+
     <div class="summary-list" id="summaryList"></div>
   </section>
+
 </main>
 
 <div class="modal-overlay" id="modalOverlay" hidden>
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <h3 id="modalTitle">Eintrag entfernen?</h3>
+  <div
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalTitle"
+  >
+    <h3 id="modalTitle">
+      Eintrag entfernen?
+    </h3>
+
     <p id="modalText"></p>
+
     <div class="modal-actions">
-      <button type="button" class="modal-cancel" id="modalCancel">Abbrechen</button>
-      <button type="button" class="modal-confirm" id="modalConfirm">Entfernen</button>
+      <button
+        type="button"
+        class="modal-cancel"
+        id="modalCancel"
+      >
+        Abbrechen
+      </button>
+
+      <button
+        type="button"
+        class="modal-confirm"
+        id="modalConfirm"
+      >
+        Entfernen
+      </button>
     </div>
   </div>
 </div>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
   import {
-    getFirestore, collection, addDoc, deleteDoc, doc,
-    onSnapshot, query, orderBy, serverTimestamp
+    initializeApp
+  } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    deleteDoc,
+    doc,
+    onSnapshot,
+    query,
+    orderBy,
+    serverTimestamp
   } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -477,199 +703,638 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+
+  /*
+   * Die Sammlung bleibt unverändert.
+   * Vorhandene Einträge werden deshalb weiterhin verwendet.
+   */
   const col = collection(db, "fahrdienst_eintraege");
 
+  /*
+   * Die Schlüssel "bringen" und "abholen" bleiben ebenfalls unverändert.
+   * Dadurch bleiben alte Einträge den richtigen Tagen zugeordnet.
+   */
   const DAYS = [
-    { name: "Montag",     datum: "10.08.2026" },
-    { name: "Dienstag",   datum: "11.08.2026" },
-    { name: "Mittwoch",   datum: "12.08.2026" },
-    { name: "Donnerstag", datum: "13.08.2026" },
-    { name: "Freitag",    datum: "14.08.2026" },
-    { name: "Samstag",    datum: "15.08.2026" },
-    { name: "Sonntag",    datum: "16.08.2026" }
+    {
+      name: "Montag",
+      datum: "10.08.2026",
+      slots: {
+        bringen: {
+          label: "Bringen",
+          zeit: "8:10 Uhr",
+          ort: "Treffpunkt zum Abholen",
+          hinweis: "Start am Auricher Berg um 8:30 Uhr",
+          icon: "🌅"
+        },
+
+        abholen: {
+          label: "Abholen",
+          zeit: "17:00 Uhr",
+          ort: "Auricher Berg",
+          icon: "🌇"
+        }
+      }
+    },
+
+    {
+      name: "Dienstag",
+      datum: "11.08.2026",
+      slots: {
+        bringen: {
+          label: "Bringen",
+          zeit: "8:10 Uhr",
+          ort: "Treffpunkt zum Abholen",
+          hinweis: "Start am Auricher Berg um 8:30 Uhr",
+          icon: "🌅"
+        },
+
+        abholen: {
+          label: "Abholen",
+          zeit: "17:00 Uhr",
+          ort: "Auricher Berg",
+          icon: "🌇"
+        }
+      }
+    },
+
+    {
+      name: "Mittwoch",
+      datum: "12.08.2026",
+      slots: {
+        bringen: {
+          label: "Bringen",
+          zeit: "8:10 Uhr",
+          ort: "Treffpunkt zum Abholen",
+          hinweis: "Start am Auricher Berg um 8:30 Uhr",
+          icon: "🌅"
+        },
+
+        abholen: {
+          label: "Abholen",
+          zeit: "16:30 Uhr",
+          ort: "Oberriexingen",
+          icon: "🌇"
+        }
+      }
+    },
+
+    {
+      name: "Donnerstag",
+      datum: "13.08.2026",
+      slots: {
+        bringen: {
+          label: "Bringen",
+          zeit: "8:10 Uhr",
+          ort: "Treffpunkt zum Abholen",
+          hinweis: "Start am Auricher Berg um 8:30 Uhr",
+          icon: "🌅"
+        },
+
+        abholen: {
+          label: "Abholen",
+          zeit: "21:00 Uhr",
+          ort: "Auricher Berg",
+          icon: "🌙"
+        }
+      }
+    },
+
+    {
+      name: "Freitag",
+      datum: "14.08.2026",
+      slots: {
+        bringen: {
+          label: "Bringen",
+          zeit: "8:10 Uhr",
+          ort: "Treffpunkt zum Abholen",
+          hinweis: "Start am Auricher Berg um 8:30 Uhr",
+          icon: "🌅"
+        },
+
+        abholen: {
+          label: "Abholen",
+          zeit: "17:00 Uhr",
+          ort: "Auricher Berg",
+          icon: "🌇"
+        }
+      }
+    },
+
+    {
+      name: "Samstag",
+      datum: "15.08.2026",
+      slots: {
+        bringen: {
+          label: "Bringen",
+          zeit: "9:30 Uhr",
+          ort: "Auricher Berg",
+          hinweis: "Beginn um 9:30 Uhr",
+          icon: "⛪"
+        },
+
+        abholen: {
+          label: "Abholen",
+          zeit: "nach dem Gottesdienst",
+          ort: "Jeder holt selbst ab",
+          hinweis: "Keine Fahrgemeinschaft für die Rückfahrt",
+          icon: "👨‍👩‍👧‍👦",
+          disabled: true,
+          disabledText: "Jeder holt selbst ab"
+        }
+      }
+    },
+
+    {
+      name: "Sonntag",
+      datum: "16.08.2026",
+      slots: {
+        bringen: {
+          label: "Treffpunkt",
+          zeit: "9:00 Uhr",
+          ort: "Haupteingang Tripsdrill",
+          icon: "🎢"
+        },
+
+        abholen: {
+          label: "Abholen",
+          zeit: "16:00 Uhr",
+          ort: "Tripsdrill",
+          icon: "🚗"
+        }
+      }
+    }
   ];
-  const SLOTS = [
-    { key: "bringen", label: "Bringen", zeit: "8:10 Uhr", icon: "🌅" },
-    { key: "abholen", label: "Abholen", zeit: "17:00 Uhr", icon: "🌇" }
+
+  const SLOT_KEYS = [
+    "bringen",
+    "abholen"
   ];
 
   const daysEl = document.getElementById("days");
   const statusEl = document.getElementById("status");
   const nameInput = document.getElementById("nameInput");
+  const summaryList = document.getElementById("summaryList");
 
-  // Eigenes Bestätigungs-Modal statt window.confirm()
   const modalOverlay = document.getElementById("modalOverlay");
   const modalText = document.getElementById("modalText");
   const modalCancel = document.getElementById("modalCancel");
   const modalConfirm = document.getElementById("modalConfirm");
 
+  function getSlotKey(day, slot) {
+    return `${day}__${slot}`;
+  }
+
+  function getDayConfig(dayName) {
+    return DAYS.find(day => day.name === dayName);
+  }
+
+  function getSlotConfig(dayName, slotKey) {
+    const day = getDayConfig(dayName);
+
+    if (!day) {
+      return null;
+    }
+
+    return day.slots[slotKey] || null;
+  }
+
+  function escapeHtml(value) {
+    const div = document.createElement("div");
+    div.textContent = String(value ?? "");
+    return div.innerHTML;
+  }
+
   function askConfirm(text) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       modalText.textContent = text;
       modalOverlay.hidden = false;
-      const cleanup = (result) => {
+
+      const cleanup = result => {
         modalOverlay.hidden = true;
+
         modalCancel.removeEventListener("click", onCancel);
         modalConfirm.removeEventListener("click", onConfirm);
         modalOverlay.removeEventListener("click", onOverlay);
+        document.removeEventListener("keydown", onKeydown);
+
         resolve(result);
       };
-      const onCancel = () => cleanup(false);
-      const onConfirm = () => cleanup(true);
-      const onOverlay = (e) => { if (e.target === modalOverlay) cleanup(false); };
+
+      const onCancel = () => {
+        cleanup(false);
+      };
+
+      const onConfirm = () => {
+        cleanup(true);
+      };
+
+      const onOverlay = event => {
+        if (event.target === modalOverlay) {
+          cleanup(false);
+        }
+      };
+
+      const onKeydown = event => {
+        if (event.key === "Escape") {
+          cleanup(false);
+        }
+      };
+
       modalCancel.addEventListener("click", onCancel);
       modalConfirm.addEventListener("click", onConfirm);
       modalOverlay.addEventListener("click", onOverlay);
+      document.addEventListener("keydown", onKeydown);
+
+      modalCancel.focus();
     });
   }
 
-  // Grundgerüst der Kurzübersicht (eine Zeile pro Tag)
-  const summaryList = document.getElementById("summaryList");
-  DAYS.forEach(({ name: day }) => {
+  /*
+   * Kurzübersicht erzeugen
+   */
+  DAYS.forEach(day => {
     const row = document.createElement("div");
+
     row.className = "summary-row";
-    row.dataset.day = day;
+    row.dataset.day = day.name;
+
     row.innerHTML = `
-      <span class="tag">${day}</span>
-      <span class="part" data-slot="bringen">–</span>
-      <span class="part" data-slot="abholen">–</span>
+      <span class="tag">${escapeHtml(day.name)}</span>
+
+      <span class="part" data-slot="bringen">
+        –
+      </span>
+
+      <span class="part" data-slot="abholen">
+        –
+      </span>
     `;
+
     summaryList.appendChild(row);
   });
 
-  // Grundgerüst der Karten aufbauen
-  DAYS.forEach(({ name: day, datum }) => {
+  /*
+   * Tageskarten erzeugen
+   */
+  DAYS.forEach(day => {
     const card = document.createElement("div");
+
     card.className = "day-card";
+
+    const slotsHtml = SLOT_KEYS.map(slotKey => {
+      const slot = day.slots[slotKey];
+      const disabled = slot.disabled === true;
+
+      const hinweisHtml = slot.hinweis
+        ? `<br><strong>${escapeHtml(slot.hinweis)}</strong>`
+        : "";
+
+      return `
+        <div
+          class="slot"
+          data-day="${escapeHtml(day.name)}"
+          data-slot="${escapeHtml(slotKey)}"
+          data-disabled="${disabled}"
+        >
+          <div class="slot-title">
+            <span class="icon">${slot.icon}</span>
+
+            <span>${escapeHtml(slot.label)}</span>
+
+            <span class="zeit">
+              ${escapeHtml(slot.zeit)}
+            </span>
+          </div>
+
+          <p class="slot-location">
+            📍 ${escapeHtml(slot.ort)}
+            ${hinweisHtml}
+          </p>
+
+          <ul class="entries"></ul>
+
+          <p class="empty" hidden>
+            ${
+              disabled
+                ? escapeHtml(slot.disabledText)
+                : "Noch niemand eingetragen"
+            }
+          </p>
+
+          <button
+            class="add-btn"
+            type="button"
+            ${disabled ? "disabled" : ""}
+          >
+            ${
+              disabled
+                ? escapeHtml(slot.disabledText)
+                : "+ Eintragen"
+            }
+          </button>
+        </div>
+      `;
+    }).join("");
+
     card.innerHTML = `
       <div class="day-head">
         <div>
           <span class="eyebrow">Tag</span>
-          <h2>${day}</h2>
+
+          <h2>${escapeHtml(day.name)}</h2>
         </div>
-        <span class="datum">${datum}</span>
+
+        <span class="datum">
+          ${escapeHtml(day.datum)}
+        </span>
       </div>
+
       <div class="slots">
-        ${SLOTS.map(s => `
-          <div class="slot" data-day="${day}" data-slot="${s.key}">
-            <div class="slot-title"><span class="icon">${s.icon}</span> ${s.label} <span class="zeit">${s.zeit}</span></div>
-            <ul class="entries"></ul>
-            <p class="empty" hidden>Noch niemand eingetragen</p>
-            <button class="add-btn" type="button">+ Eintragen</button>
-          </div>
-        `).join("")}
+        ${slotsHtml}
       </div>
     `;
+
     daysEl.appendChild(card);
   });
 
-  // Wird bei jedem Snapshot aktualisiert: wie viele Einträge hat welcher Slot
   let slotCounts = {};
 
-  // Klick-Handler für Eintragen-Buttons
-  daysEl.addEventListener("click", async (e) => {
-    if (!e.target.classList.contains("add-btn")) return;
+  /*
+   * Neuen Fahrer eintragen
+   */
+  daysEl.addEventListener("click", async event => {
+    const button = event.target.closest(".add-btn");
+
+    if (!button || button.disabled) {
+      return;
+    }
+
+    const slotEl = button.closest(".slot");
+
+    if (!slotEl) {
+      return;
+    }
+
+    const day = slotEl.dataset.day;
+    const slot = slotEl.dataset.slot;
+    const slotConfig = getSlotConfig(day, slot);
+
+    if (!slotConfig || slotConfig.disabled) {
+      return;
+    }
+
     const name = nameInput.value.trim();
+
     if (!name) {
-      statusEl.textContent = "Bitte zuerst deinen Namen eingeben.";
+      statusEl.textContent =
+        "Bitte zuerst deinen Namen eingeben.";
+
       nameInput.focus();
       return;
     }
-    const slotEl = e.target.closest(".slot");
-    const day = slotEl.dataset.day;
-    const slot = slotEl.dataset.slot;
-    const key = day + slot;
+
+    const key = getSlotKey(day, slot);
+
     if ((slotCounts[key] || 0) >= 1) {
-      statusEl.textContent = "Für diesen Termin ist bereits jemand eingetragen.";
+      statusEl.textContent =
+        "Für diesen Termin ist bereits jemand eingetragen.";
+
       return;
     }
-    e.target.disabled = true;
+
+    button.disabled = true;
+    button.textContent = "Wird gespeichert …";
+
     try {
-      await addDoc(col, { day, slot, name, timestamp: serverTimestamp() });
+      await addDoc(col, {
+        day: day,
+        slot: slot,
+        name: name,
+        timestamp: serverTimestamp()
+      });
+
       statusEl.textContent = "";
-    } catch (err) {
-      statusEl.textContent = "Fehler beim Speichern: " + err.message;
-      e.target.disabled = false;
+    } catch (error) {
+      statusEl.textContent =
+        "Fehler beim Speichern: " + error.message;
+
+      button.disabled = false;
+      button.textContent = "+ Eintragen";
     }
   });
 
-  // Löschen eines eigenen Eintrags – mit Bestätigung über eigenes Modal
-  daysEl.addEventListener("click", async (e) => {
-    if (!e.target.classList.contains("remove-btn")) return;
-    const id = e.target.dataset.id;
-    const name = e.target.dataset.name;
-    const confirmed = await askConfirm(`Eintrag von "${name}" wirklich entfernen?`);
-    if (!confirmed) return;
+  /*
+   * Eintrag entfernen
+   */
+  daysEl.addEventListener("click", async event => {
+    const button = event.target.closest(".remove-btn");
+
+    if (!button) {
+      return;
+    }
+
+    const id = button.dataset.id;
+    const name = button.dataset.name;
+
+    const confirmed = await askConfirm(
+      `Eintrag von "${name}" wirklich entfernen?`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
     try {
-      await deleteDoc(doc(db, "fahrdienst_eintraege", id));
-    } catch (err) {
-      statusEl.textContent = "Fehler beim Entfernen: " + err.message;
+      await deleteDoc(
+        doc(db, "fahrdienst_eintraege", id)
+      );
+    } catch (error) {
+      statusEl.textContent =
+        "Fehler beim Entfernen: " + error.message;
     }
   });
 
-  // Live-Daten
-  const q = query(col, orderBy("timestamp", "asc"));
-  onSnapshot(q, (snapshot) => {
-    // Alle Listen leeren
-    document.querySelectorAll(".slot").forEach(slotEl => {
-      slotEl.querySelector(".entries").innerHTML = "";
-    });
+  /*
+   * Live-Daten aus Firestore laden
+   */
+  const q = query(
+    col,
+    orderBy("timestamp", "asc")
+  );
 
-    const counts = {};
-    const names = {};
-    snapshot.forEach(docSnap => {
-      const data = docSnap.data();
-      const selector = `.slot[data-day="${data.day}"][data-slot="${data.slot}"]`;
-      const slotEl = daysEl.querySelector(selector);
-      if (!slotEl) return;
-      const list = slotEl.querySelector(".entries");
-      const li = document.createElement("li");
-      li.innerHTML = `<span>${escapeHtml(data.name)}</span>
-        <button class="remove-btn" data-id="${docSnap.id}" data-name="${escapeHtml(data.name)}" title="Eintrag entfernen">✕</button>`;
-      list.appendChild(li);
-      const key = data.day + data.slot;
-      counts[key] = (counts[key] || 0) + 1;
-      names[key] = data.name;
-    });
-    slotCounts = counts;
+  onSnapshot(
+    q,
 
-    document.querySelectorAll(".slot").forEach(slotEl => {
-      const list = slotEl.querySelector(".entries");
-      const empty = slotEl.querySelector(".empty");
-      const addBtn = slotEl.querySelector(".add-btn");
-      const key = slotEl.dataset.day + slotEl.dataset.slot;
-      const belegt = (counts[key] || 0) >= 1;
-      empty.hidden = list.children.length > 0;
-      addBtn.disabled = belegt;
-      addBtn.textContent = belegt ? "Bereits belegt" : "+ Eintragen";
-    });
+    snapshot => {
+      document.querySelectorAll(".slot").forEach(slotEl => {
+        slotEl.querySelector(".entries").innerHTML = "";
+      });
 
-    // Kurzübersicht unten aktualisieren
-    SLOTS.forEach(s => {
-      DAYS.forEach(({ name: day }) => {
-        const key = day + s.key;
-        const el = summaryList.querySelector(`.summary-row[data-day="${day}"] .part[data-slot="${s.key}"]`);
-        if (!el) return;
-        if (names[key]) {
-          el.classList.remove("offen");
-          el.innerHTML = `<span class="zeit-klein">${s.icon} ${s.zeit}</span>${escapeHtml(names[key])}`;
+      const counts = {};
+      const names = {};
+
+      snapshot.forEach(docSnap => {
+        const data = docSnap.data();
+
+        if (!data.day || !data.slot) {
+          return;
+        }
+
+        const slotElements = Array.from(
+          daysEl.querySelectorAll(".slot")
+        );
+
+        const slotEl = slotElements.find(element => {
+          return (
+            element.dataset.day === data.day &&
+            element.dataset.slot === data.slot
+          );
+        });
+
+        if (!slotEl) {
+          return;
+        }
+
+        const list = slotEl.querySelector(".entries");
+        const li = document.createElement("li");
+
+        const safeName = escapeHtml(
+          data.name || "Unbekannt"
+        );
+
+        li.innerHTML = `
+          <span>${safeName}</span>
+
+          <button
+            type="button"
+            class="remove-btn"
+            data-id="${docSnap.id}"
+            data-name="${safeName}"
+            title="Eintrag entfernen"
+            aria-label="Eintrag von ${safeName} entfernen"
+          >
+            ✕
+          </button>
+        `;
+
+        list.appendChild(li);
+
+        const key = getSlotKey(
+          data.day,
+          data.slot
+        );
+
+        counts[key] = (counts[key] || 0) + 1;
+        names[key] = data.name;
+      });
+
+      slotCounts = counts;
+
+      /*
+       * Eintragen-Schaltflächen aktualisieren
+       */
+      document.querySelectorAll(".slot").forEach(slotEl => {
+        const list = slotEl.querySelector(".entries");
+        const empty = slotEl.querySelector(".empty");
+        const addButton = slotEl.querySelector(".add-btn");
+
+        const day = slotEl.dataset.day;
+        const slot = slotEl.dataset.slot;
+        const slotConfig = getSlotConfig(day, slot);
+
+        const key = getSlotKey(day, slot);
+        const belegt = (counts[key] || 0) >= 1;
+        const disabled = slotConfig?.disabled === true;
+
+        empty.hidden = list.children.length > 0;
+
+        if (disabled) {
+          addButton.disabled = true;
+          addButton.textContent =
+            slotConfig.disabledText || "Nicht erforderlich";
         } else {
-          el.classList.add("offen");
-          el.innerHTML = `<span class="zeit-klein">${s.icon} ${s.zeit}</span>noch offen`;
+          addButton.disabled = belegt;
+
+          addButton.textContent = belegt
+            ? "Bereits belegt"
+            : "+ Eintragen";
         }
       });
-    });
 
-    statusEl.textContent = "";
-  }, (err) => {
-    statusEl.textContent = "Verbindung fehlgeschlagen: " + err.message;
-  });
+      /*
+       * Kurzübersicht aktualisieren
+       */
+      DAYS.forEach(day => {
+        SLOT_KEYS.forEach(slotKey => {
+          const slotConfig = day.slots[slotKey];
+          const key = getSlotKey(day.name, slotKey);
 
-  function escapeHtml(str){
-    const d = document.createElement("div");
-    d.textContent = str;
-    return d.innerHTML;
-  }
+          const row = Array.from(
+            summaryList.querySelectorAll(".summary-row")
+          ).find(element => {
+            return element.dataset.day === day.name;
+          });
+
+          if (!row) {
+            return;
+          }
+
+          const element = row.querySelector(
+            `.part[data-slot="${slotKey}"]`
+          );
+
+          if (!element) {
+            return;
+          }
+
+          const hinweis = slotConfig.hinweis
+            ? `<span class="ort-klein">${escapeHtml(slotConfig.hinweis)}</span>`
+            : "";
+
+          const information = `
+            <span class="zeit-klein">
+              ${slotConfig.icon}
+              ${escapeHtml(slotConfig.label)}:
+              ${escapeHtml(slotConfig.zeit)}
+            </span>
+
+            <span class="ort-klein">
+              📍 ${escapeHtml(slotConfig.ort)}
+            </span>
+
+            ${hinweis}
+          `;
+
+          if (names[key]) {
+            element.classList.remove("offen");
+
+            element.innerHTML =
+              information +
+              escapeHtml(names[key]);
+          } else if (slotConfig.disabled) {
+            element.classList.remove("offen");
+
+            element.innerHTML =
+              information +
+              "Keine Fahrgemeinschaft";
+          } else {
+            element.classList.add("offen");
+
+            element.innerHTML =
+              information +
+              "noch offen";
+          }
+        });
+      });
+
+      statusEl.textContent = "";
+    },
+
+    error => {
+      statusEl.textContent =
+        "Verbindung fehlgeschlagen: " + error.message;
+    }
+  );
 </script>
 
 </body>
